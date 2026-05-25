@@ -1,0 +1,83 @@
+.welcome-card {
+  background: rgba(255, 248, 235, 0.96);
+  border-radius: 60px;
+  padding: 2rem;
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 30px 50px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px);
+  border: 3px solid #ffd700;
+  animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.welcome-emoji {
+  font-size: 5rem;
+  margin-bottom: 1rem;
+}
+
+.welcome-title {
+  font-family: 'Georgia', serif;
+  font-size: 2.5rem;
+  color: #c85b1e;
+  margin-bottom: 0.5rem;
+}
+
+.welcome-subtitle {
+  color: #2c6e6e;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.welcome-text {
+  font-size: 1.1rem;
+  margin: 20px 0;
+  color: #b47c44;
+  font-weight: bold;
+}
+
+.welcome-description {
+  margin: 20px 0;
+  color: #4a5568;
+  line-height: 1.6;
+}
+
+.welcome-button {
+  background: linear-gradient(135deg, #ff9f4a, #ff6b35);
+  border: none;
+  padding: 14px 35px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 50px;
+  color: white;
+  cursor: pointer;
+  margin: 20px 0;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.welcome-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.welcome-quote {
+  font-style: italic;
+  color: #b47c44;
+  font-size: 0.95rem;
+  margin-top: 20px;
+  padding: 10px;
+  background: #fff0dc;
+  border-radius: 30px;
+}

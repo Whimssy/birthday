@@ -1,0 +1,124 @@
+.birthday-card {
+  background: radial-gradient(circle at 10% 30%, #fff7e8, #ffe6c7);
+  border-radius: 80px 80px 80px 40px;
+  padding: 2rem;
+  max-width: 650px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 35px 55px rgba(0, 0, 0, 0.3);
+  border: 10px double #ffbc6e;
+  position: relative;
+  animation: zoomIn 0.6s ease-out;
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.card-decoration {
+  position: absolute;
+  top: -30px;
+  right: -20px;
+  font-size: 120px;
+  opacity: 0.2;
+  transform: rotate(15deg);
+}
+
+.card-title {
+  font-family: 'Georgia', serif;
+  font-size: 2.2rem;
+  color: #c85b1e;
+  margin-bottom: 0.5rem;
+}
+
+.card-emoji {
+  font-size: 3rem;
+  margin: 10px 0;
+}
+
+.card-message {
+  margin: 25px 0;
+  padding: 20px;
+  background: #fff0dc;
+  border-radius: 60px;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #4a5568;
+}
+
+.card-quote {
+  background: #e9c891;
+  padding: 12px 20px;
+  border-radius: 50px;
+  margin: 20px 0;
+  font-style: italic;
+  font-weight: bold;
+  color: #5a3e1b;
+}
+
+.sassy-button {
+  background: #b3602c;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 50px;
+  color: white;
+  cursor: pointer;
+  margin: 10px;
+  transition: transform 0.2s;
+}
+
+.sassy-button:hover {
+  transform: scale(1.05);
+}
+
+.sassy-message {
+  margin-top: 20px;
+  padding: 15px;
+  background: #ffd6a5;
+  border-radius: 40px;
+  font-size: 0.95rem;
+  border-left: 8px solid #e68a2e;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-buttons {
+  margin-top: 30px;
+}
+
+.reset-button {
+  background: #3a7b6b;
+  padding: 10px 25px;
+  border-radius: 50px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.reset-button:hover {
+  transform: scale(1.05);
+}
+
+.card-footer {
+  margin-top: 25px;
+  font-size: 0.9rem;
+  color: #664d34;
+}

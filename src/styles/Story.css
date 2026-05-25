@@ -1,0 +1,71 @@
+.story-card {
+  background: linear-gradient(145deg, #fff9f0, #fff0df);
+  border-radius: 70px;
+  padding: 2rem 1.8rem;
+  max-width: 650px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 30px 40px rgba(0, 0, 0, 0.2);
+  border: 3px solid #ffc48a;
+  animation: fadeInRight 0.6s ease-out;
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.story-title {
+  font-size: 2rem;
+  font-family: 'Georgia', serif;
+  color: #c85b1e;
+  margin-bottom: 1.5rem;
+}
+
+.story-text {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin: 30px 0;
+  color: #2f3e46;
+  min-height: 250px;
+}
+
+.story-vibe {
+  font-style: italic;
+  color: #b47c44;
+  font-size: 1rem;
+  margin: 20px 0;
+}
+
+.story-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.story-nav-button {
+  background: #c2a575;
+  padding: 10px 24px;
+  border-radius: 50px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s;
+  color: white;
+}
+
+.story-nav-button.primary {
+  background: #f4a261;
+  margin-left: auto;
+}
+
+.story-nav-button:hover {
+  transform: scale(1.05);
+}
