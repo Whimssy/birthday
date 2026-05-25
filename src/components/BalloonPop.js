@@ -18,11 +18,8 @@ const BalloonPop = ({ onComplete, photos }) => {
 
   const powerUpColors = ['#FFD700', '#FF69B4', '#00CED1'];
 
+  // Create balloons - only runs once on mount
   useEffect(() => {
-    soundManager.init();
-    soundManager.setStage('balloon');
-    
-    // Create 15 balloons
     const newBalloons = [];
     for (let i = 0; i < 15; i++) {
       const isPowerUp = Math.random() < 0.2;
@@ -39,10 +36,16 @@ const BalloonPop = ({ onComplete, photos }) => {
       });
     }
     setBalloons(newBalloons);
-    
+  }, []); // Empty dependency array - colors and powerUpColors are static
+
+  // Sound initialization
+  useEffect(() => {
+    soundManager.init();
+    soundManager.setStage('balloon');
     return () => soundManager.stopMusic();
   }, []);
 
+  // Combo timer effect
   useEffect(() => {
     if (combo > 0) {
       if (comboTimer) clearTimeout(comboTimer);
@@ -54,7 +57,17 @@ const BalloonPop = ({ onComplete, photos }) => {
     return () => {
       if (comboTimer) clearTimeout(comboTimer);
     };
-  }, [combo]);
+  }, [combo, comboTimer]);
+
+  // Check completion
+  useEffect(() => {
+    if (poppedCount >= 15 && !showPhotos) {
+      soundManager.playSuccess();
+      setTimeout(() => {
+        setShowPhotos(true);
+      }, 500);
+    }
+  }, [poppedCount, showPhotos]);
 
   const popBalloon = (id) => {
     const balloon = balloons.find(b => b.id === id);
@@ -92,20 +105,43 @@ const BalloonPop = ({ onComplete, photos }) => {
     }, 600);
   };
 
-  useEffect(() => {
-    if (poppedCount >= 15 && !showPhotos) {
-      soundManager.playSuccess();
-      setTimeout(() => {
-        setShowPhotos(true);
-      }, 500);
-    }
-  }, [poppedCount, showPhotos]);
-
   if (showPhotos) {
     return (
       <div className="photos-reveal">
         <div className="photos-container">
-         
+          <div className="confetti-burst">
+            <span className="burst-icon">✦</span>
+            <span className="burst-icon">✧</span>
+            <span className="burst-icon">✦</span>
+          </div>
+          <h2 className="photos-title">✦ OUR BEAUTIFUL SISTER! ✦</h2>
+          <p className="photos-subtitle">
+            You completed the challenge! Here are your special moments
+          </p>
+          <div className="photos-grid">
+            {photos.map((photo, index) => (
+              <div 
+                key={index} 
+                className="photo-card"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className="photo-frame">
+                  <img 
+                    src={photo.url} 
+                    alt={photo.caption} 
+                    className="photo-img"
+                    onError={(e) => {
+                      e.target.src = "https://via.placeholder.com/300x300/FFD700/FFFFFF?text=Beautiful+You";
+                    }}
+                  />
+                  <div className="photo-overlay">
+                    <span className="photo-emoji">💖</span>
+                  </div>
+                </div>
+                <p className="photo-caption">{photo.caption}</p>
+              </div>
+            ))}
+          </div>
           <button className="continue-button" onClick={() => {
             soundManager.playClick();
             onComplete();

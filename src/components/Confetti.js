@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import '../styles/Confetti.css';
 
 const Confetti = ({ active }) => {

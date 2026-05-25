@@ -12,20 +12,17 @@ class SoundManager {
     try {
       this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
       this.isInitialized = true;
-      console.log('Sound manager initialized');
     } catch(e) {
-      console.log('Web Audio API not supported');
+      // Silent fail - audio not supported
     }
   }
 
-  // Resume audio context (call this on user interaction)
   resume() {
     if (this.audioContext && this.audioContext.state === 'suspended') {
       this.audioContext.resume();
     }
   }
 
-  // Generic playSound method (for backward compatibility)
   playSound(soundName) {
     if (this.isMuted) return;
     this.resume();
@@ -57,21 +54,18 @@ class SoundManager {
     }
   }
 
-  // Play pop sound (for pearls)
   playPop() {
     if (this.isMuted) return;
     this.resume();
     this.playTone(800, 0.15, 0.2);
   }
 
-  // Play click sound (for buttons)
   playClick() {
     if (this.isMuted) return;
     this.resume();
     this.playTone(600, 0.12, 0.1);
   }
 
-  // Play success fanfare
   playSuccess() {
     if (this.isMuted) return;
     this.resume();
@@ -79,35 +73,30 @@ class SoundManager {
     setTimeout(() => this.playTone(659.25, 0.2, 0.5), 100);
   }
 
-  // Play balloon pop sound
   playBalloonPop() {
     if (this.isMuted) return;
     this.resume();
     this.playTone(1000, 0.18, 0.15);
   }
 
-  // Play reveal sound
   playReveal() {
     if (this.isMuted) return;
     this.resume();
     this.playTone(440, 0.2, 0.8);
   }
 
-  // Play gift open sound
   playGiftOpen() {
     if (this.isMuted) return;
     this.resume();
     this.playTone(300, 0.2, 0.6);
   }
 
-  // Play transition sound
   playTransition() {
     if (this.isMuted) return;
     this.resume();
     this.playTone(400, 0.12, 0.3);
   }
 
-  // Generic tone generator
   playTone(frequency, volume, duration) {
     if (!this.audioContext) {
       this.init();
@@ -130,11 +119,10 @@ class SoundManager {
       gainNode.gain.exponentialRampToValueAtTime(0.00001, ctx.currentTime + duration);
       oscillator.stop(ctx.currentTime + duration);
     } catch(e) {
-      console.log('Error playing sound:', e);
+      // Silent fail
     }
   }
 
-  // Play background music
   playMusic(stage) {
     if (this.isMuted) return;
     this.resume();
@@ -190,4 +178,5 @@ class SoundManager {
   }
 }
 
-export default new SoundManager();
+const soundManager = new SoundManager();
+export default soundManager;
