@@ -89,43 +89,9 @@ const GiftBox = ({ onComplete, sisterPhoto }) => {
           <h1 className="reveal-title">🎁 SURPRISE! 🎁</h1>
           <h2 className="reveal-subtitle">A Special Gift Just For You!</h2>
 
-          <div className="glowing-photo-container">
-            <div className="glowing-border">
-              <div className="glow-ring"></div>
-              <div className="glow-ring delay-1"></div>
-              <div className="glow-ring delay-2"></div>
-              <img 
-                src={sisterPhoto} 
-                alt="Beautiful Sister" 
-                className="glowing-photo"
-                onError={(e) => {
-                  e.target.src = "https://via.placeholder.com/400x400/FFD700/FFFFFF?text=Beautiful+You";
-                }}
-              />
-            </div>
-            <div className="photo-caption-glow">
-              ✨ Our Beautiful Queen ✨
-            </div>
-          </div>
+          
 
-          <div className="flower-messages">
-            <div className="flower-message" style={{ animationDelay: '0s' }}>
-              🌸 You Bloom Every Day 🌸
-            </div>
-            <div className="flower-message" style={{ animationDelay: '0.5s' }}>
-              🌺 Beautiful Inside & Out 🌺
-            </div>
-            <div className="flower-message" style={{ animationDelay: '1s' }}>
-              💐 A True Masterpiece 💐
-            </div>
-            <div className="flower-message" style={{ animationDelay: '1.5s' }}>
-              🌻 Radiating Love & Light 🌻
-            </div>
-            <div className="flower-message" style={{ animationDelay: '2s' }}>
-              🌹 Forever Blooming 🌹
-            </div>
-          </div>
-
+          
           <button className="continue-birthday-btn" onClick={onComplete}>
             🎂 Continue to Birthday Wishes 🎂
           </button>

@@ -1,6 +1,6 @@
 /* Main Container */
 .gift-box-container {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-image: url('https://i.pinimg.com/736x/7c/de/3b/7cde3b82fec1b69dbc7807fea3c5ef99.jpg'); ;
   border-radius: 60px;
   padding: 2rem;
   max-width: 800px;
@@ -286,8 +286,9 @@
 /* ==================== */
 
 .gift-reveal-container {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 60px;
+  background-image: url(https://i.pinimg.com/736x/51/51/e7/5151e7ea3e4c45fd5ce6f295a66028ee.jpg);
+  background-repeat: no-repeat;
+  margin-left: 15%;
   padding: 2rem;
   max-width: 900px;
   width: 100%;
@@ -406,6 +407,7 @@
   color: #FFD700;
   font-size: 2.5rem;
   margin-bottom: 10px;
+  margin-right: 27%;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
   animation: titlePop 0.8s ease;
 }
@@ -428,6 +430,7 @@
   color: white;
   font-size: 1.2rem;
   margin-bottom: 30px;
+  margin-right: 27%;
 }
 
 /* Glowing Photo */
@@ -568,6 +571,7 @@
   color: white;
   cursor: pointer;
   margin-top: 30px;
+  margin-right: 25%;
   transition: all 0.3s ease;
   box-shadow: 0 5px 20px rgba(0,0,0,0.3);
   animation: buttonGlow 2s infinite;

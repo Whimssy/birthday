@@ -109,39 +109,8 @@ const BalloonPop = ({ onComplete, photos }) => {
     return (
       <div className="photos-reveal">
         <div className="photos-container">
-          <div className="confetti-burst">
-            <span className="burst-icon">✦</span>
-            <span className="burst-icon">✧</span>
-            <span className="burst-icon">✦</span>
-          </div>
-          <h2 className="photos-title">✦ OUR BEAUTIFUL SISTER! ✦</h2>
-          <p className="photos-subtitle">
-            You completed the challenge! Here are your special moments
-          </p>
-          <div className="photos-grid">
-            {photos.map((photo, index) => (
-              <div 
-                key={index} 
-                className="photo-card"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="photo-frame">
-                  <img 
-                    src={photo.url} 
-                    alt={photo.caption} 
-                    className="photo-img"
-                    onError={(e) => {
-                      e.target.src = "https://via.placeholder.com/300x300/FFD700/FFFFFF?text=Beautiful+You";
-                    }}
-                  />
-                  <div className="photo-overlay">
-                    <span className="photo-emoji">💖</span>
-                  </div>
-                </div>
-                <p className="photo-caption">{photo.caption}</p>
-              </div>
-            ))}
-          </div>
+          
+          
           <button className="continue-button" onClick={() => {
             soundManager.playClick();
             onComplete();
@@ -153,8 +122,8 @@ const BalloonPop = ({ onComplete, photos }) => {
     );
   }
 
-  const remaining = Math.max(0, 15 - poppedCount);
-  const progressPercent = Math.min(100, (poppedCount / 15) * 100);
+  const remaining = Math.max(0, 27 - poppedCount);
+  const progressPercent = Math.min(100, (poppedCount / 27) * 100);
 
   return (
     <div className="balloon-game">
@@ -163,7 +132,7 @@ const BalloonPop = ({ onComplete, photos }) => {
         <div className="balloon-counter">
           <div className="counter-stats">
             <span className="counter-number">{Math.floor(poppedCount)}</span>
-            <span className="counter-total"> / 15</span>
+            <span className="counter-total"> / 27</span>
             {combo > 0 && (
               <div className="combo-badge">
                 <span className="combo-text">{combo}x COMBO!</span>
