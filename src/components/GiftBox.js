@@ -9,43 +9,6 @@ const GiftBox = ({ onComplete, sisterPhoto, familyPhotos = [], familyMessages = 
   const [showPromisePopup, setShowPromisePopup] = useState(false);
   const [selectedPromise, setSelectedPromise] = useState(null);
 
-  // Extract promise from story text
-  const extractPromise = (story) => {
-    if (!story) return null;
-    const promiseMatch = story.match(/💝 Promise from (.*?): "(.*?)"/);
-    if (promiseMatch) {
-      return {
-        name: promiseMatch[1],
-        promise: promiseMatch[2]
-      };
-    }
-    return null;
-  };
-
-  // Clean story without the promise part
-  const getCleanStory = (story) => {
-    if (!story) return null;
-    const promiseIndex = story.indexOf('💝 Promise from');
-    if (promiseIndex !== -1) {
-      return story.substring(0, promiseIndex).trim();
-    }
-    return story;
-  };
-
-  const handleViewPromise = (photo) => {
-    const promise = extractPromise(photo.story);
-    if (promise) {
-      setSelectedPromise(promise);
-      setShowPromisePopup(true);
-      soundManager.playClick();
-    }
-  };
-
-  const closePromisePopup = () => {
-    setShowPromisePopup(false);
-    setSelectedPromise(null);
-  };
-
   const messageColors = [
     { primary: '#FF6B6B', light: '#FF6B6B20' },
     { primary: '#FF69B4', light: '#FF69B420' },
@@ -94,6 +57,19 @@ const GiftBox = ({ onComplete, sisterPhoto, familyPhotos = [], familyMessages = 
     setSelectedPhoto(null);
   };
 
+  const showPromiseDetails = (promise) => {
+    if (promise && promise.name && promise.promise) {
+      setSelectedPromise(promise);
+      setShowPromisePopup(true);
+      soundManager.playClick();
+    }
+  };
+
+  const closePromisePopup = () => {
+    setShowPromisePopup(false);
+    setSelectedPromise(null);
+  };
+
   const handleRestart = () => {
     soundManager.playClick();
     onComplete();
@@ -101,11 +77,17 @@ const GiftBox = ({ onComplete, sisterPhoto, familyPhotos = [], familyMessages = 
 
   const currentMessage = messagesWithColors[currentMessageIndex];
 
+  // Debug: Log what photos we have
+  console.log('Family Photos in GiftBox:', familyPhotos);
+  familyPhotos.forEach(photo => {
+    console.log('Photo:', photo.caption, 'Has promise:', !!photo.promise, photo.promise);
+  });
+
+  // Final Celebration
   if (showFinalCelebration) {
     return (
       <div className="final-celebration-cartoon">
         <div className="celebration-backdrop-cartoon"></div>
-        
         <div className="fireworks-cartoon">
           {[...Array(50)].map((_, i) => (
             <div key={i} className="firework-cartoon" style={{
@@ -114,7 +96,6 @@ const GiftBox = ({ onComplete, sisterPhoto, familyPhotos = [], familyMessages = 
             }}>🎆</div>
           ))}
         </div>
-        
         <div className="final-floating-hearts-cartoon">
           {[...Array(60)].map((_, i) => (
             <div key={i} className="final-heart-cartoon" style={{
@@ -126,11 +107,9 @@ const GiftBox = ({ onComplete, sisterPhoto, familyPhotos = [], familyMessages = 
             </div>
           ))}
         </div>
-        
         <div className="celebration-content-cartoon">
           <div className="celebration-crown-cartoon">👑🎉👑</div>
           <h1 className="celebration-title-cartoon">🎈 CONGRATULATIONS! 🎈</h1>
-          
           <div className="celebration-card-cartoon">
             <div className="message-glow-cartoon"></div>
             <div className="celebration-text-cartoon">
@@ -140,7 +119,6 @@ const GiftBox = ({ onComplete, sisterPhoto, familyPhotos = [], familyMessages = 
               <p className="fun-message-cartoon">You've unlocked all the special surprises! 🎂🎁🎈</p>
             </div>
           </div>
-          
           <button className="restart-celebration-btn-cartoon" onClick={handleRestart}>
             <span className="restart-icon-cartoon">🔄</span>
             <span className="restart-text-cartoon">EXPERIENCE AGAIN!</span>
@@ -177,13 +155,12 @@ const GiftBox = ({ onComplete, sisterPhoto, familyPhotos = [], familyMessages = 
               This promise is sealed with love
               <span>💖</span>
             </div>
-            <button className="promise-popup-button" onClick={closePromisePopup}>
-              Close
-            </button>
+            <button className="promise-popup-button" onClick={closePromisePopup}>Close</button>
           </div>
         </div>
       )}
 
+      {/* Hero Section */}
       <div className="giftbox-hero-cartoon">
         <div className="hero-glow-cartoon"></div>
         <div className="hero-content-cartoon">
@@ -206,7 +183,6 @@ const GiftBox = ({ onComplete, sisterPhoto, familyPhotos = [], familyMessages = 
         <>
           <div className="messages-carousel-cartoon">
             <button className={`carousel-arrow-cartoon prev ${currentMessageIndex === 0 ? 'disabled' : ''}`} onClick={prevMessage} disabled={currentMessageIndex === 0}>◀</button>
-            
             <div className="message-card-container-cartoon">
               <div className="message-card-cartoon" style={{ background: `linear-gradient(135deg, ${currentMessage?.lightColor || '#FF6B6B20'}, rgba(255,255,255,0.98))`, borderLeftColor: currentMessage?.color || '#FF6B6B' }}>
                 <div className="card-shine-cartoon"></div>
@@ -225,23 +201,16 @@ const GiftBox = ({ onComplete, sisterPhoto, familyPhotos = [], familyMessages = 
                 </div>
               </div>
             </div>
-
             <button className={`carousel-arrow-cartoon next ${currentMessageIndex === messagesWithColors.length - 1 ? 'disabled' : ''}`} onClick={nextMessage}>▶</button>
           </div>
-
           <div className="message-progress-cartoon">
             {messagesWithColors.map((msg, idx) => (
               <span key={idx} className={`progress-dot-cartoon ${idx === currentMessageIndex ? 'active' : ''}`} style={{ background: idx === currentMessageIndex ? msg.color : '#ddd' }} onClick={() => goToMessage(idx)} />
             ))}
           </div>
-          
           {currentMessageIndex < messagesWithColors.length - 1 && (
-            <div className="next-hint-cartoon">
-              <span className="hint-arrow-cartoon">👇</span>
-              <p>Click the arrow to see the next message!</p>
-            </div>
+            <div className="next-hint-cartoon"><span className="hint-arrow-cartoon">👇</span><p>Click the arrow to see the next message!</p></div>
           )}
-          
           {currentMessageIndex === messagesWithColors.length - 1 && (
             <div className="final-hint-cartoon">
               <div className="hint-pulse-cartoon"></div>
@@ -267,7 +236,7 @@ const GiftBox = ({ onComplete, sisterPhoto, familyPhotos = [], familyMessages = 
               <span className="blink-text">CLICK ON ANY PHOTO</span> to see the memory
             </p>
             <div className="encouragement-stats">
-              <span className="click-counter">📸 {familyPhotos.length} beautiful memories with promises!</span>
+              <span className="click-counter">📸 {familyPhotos.length} beautiful memories</span>
             </div>
             <div className="encouragement-arrow">⬇️ TAP ANY PHOTO BELOW ⬇️</div>
           </div>
@@ -280,44 +249,55 @@ const GiftBox = ({ onComplete, sisterPhoto, familyPhotos = [], familyMessages = 
           
           <div className="photos-masonry-cartoon">
             {familyPhotos.map((photo, idx) => {
-              const promise = extractPromise(photo.story);
+              // Check if this photo has a promise
+              const hasPromise = photo.promise && photo.promise.name && photo.promise.promise;
+              console.log(`Photo ${idx}: ${photo.caption} - Has Promise: ${hasPromise}`);
               
               return (
                 <div 
                   key={idx} 
                   className="gallery-photo-item-cartoon"
-                  onClick={() => openPhotoModal(photo)}
                   style={{ animationDelay: `${idx * 0.05}s` }}
                 >
                   {photo.isVideo ? (
-                    <div className="video-thumb-cartoon">
+                    <div className="video-thumb-cartoon" onClick={() => openPhotoModal(photo)}>
                       <video src={photo.url} className="gallery-video-preview-cartoon" muted />
                       <div className="video-play-overlay-cartoon">▶</div>
                     </div>
                   ) : (
-                    <img src={photo.url} alt={photo.caption} className="gallery-image-cartoon" />
+                    <img 
+                      src={photo.url} 
+                      alt={photo.caption} 
+                      className="gallery-image-cartoon" 
+                      onClick={() => openPhotoModal(photo)}
+                    />
                   )}
-                  <div className="photo-caption-overlay-cartoon">
+                  <div className="photo-caption-overlay-cartoon" onClick={() => openPhotoModal(photo)}>
                     <p>{photo.caption}</p>
                     <span className="view-icon-cartoon">🔍 CLICK TO VIEW</span>
                   </div>
                   
-                  {/* Promise Button */}
-                  {promise && (
+                  {/* PROMISE BUTTON - Only show if promise exists */}
+                  {hasPromise ? (
                     <button 
                       className="promise-view-btn"
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleViewPromise(photo);
+                        showPromiseDetails(photo.promise);
                       }}
                     >
                       <span>💝</span>
-                      View Promise
+                      View Promise from {photo.promise.name}
                       <span>✨</span>
                     </button>
+                  ) : (
+                    <div className="no-promise-badge">
+                      <span>📸</span>
+                      <span>Memory</span>
+                    </div>
                   )}
                   
-                  <div className="click-me-badge">👆 CLICK ME!</div>
+                  <div className="click-me-badge" onClick={() => openPhotoModal(photo)}>👆 CLICK ME!</div>
                 </div>
               );
             })}
@@ -325,6 +305,7 @@ const GiftBox = ({ onComplete, sisterPhoto, familyPhotos = [], familyMessages = 
         </div>
       )}
 
+      {/* Restart Button */}
       <div className="restart-section-cartoon">
         <button className="restart-main-btn-cartoon" onClick={handleRestart}>
           <span className="restart-icon-cartoon">🔄</span>
@@ -348,25 +329,19 @@ const GiftBox = ({ onComplete, sisterPhoto, familyPhotos = [], familyMessages = 
             </div>
             <div className="modal-caption-cartoon">
               <h3>{selectedPhoto.caption}</h3>
-              <p className="modal-story">{getCleanStory(selectedPhoto.story)}</p>
+              <p className="modal-story">{selectedPhoto.story || "A beautiful memory shared just for you 💝"}</p>
               
               {/* Promise Button in Modal */}
-              {(() => {
-                const promise = extractPromise(selectedPhoto.story);
-                if (promise) {
-                  return (
-                    <button 
-                      className="modal-promise-btn"
-                      onClick={() => handleViewPromise(selectedPhoto)}
-                    >
-                      <span>💝</span>
-                      Read the Promise Made For You
-                      <span>✨</span>
-                    </button>
-                  );
-                }
-                return null;
-              })()}
+              {selectedPhoto.promise && selectedPhoto.promise.name && selectedPhoto.promise.promise && (
+                <button 
+                  className="modal-promise-btn"
+                  onClick={() => showPromiseDetails(selectedPhoto.promise)}
+                >
+                  <span>💝</span>
+                  Read the Promise from {selectedPhoto.promise.name}
+                  <span>✨</span>
+                </button>
+              )}
               
               <div className="modal-heart-cartoon">
                 <span>💖</span>

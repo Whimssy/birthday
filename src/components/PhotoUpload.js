@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { uploadPhoto, getPhotos, deletePhoto } from '../utils/supabaseClient';
+import { uploadPhoto, savePromise, saveMessage, getPhotos, deletePhoto } from '../utils/supabaseClient';
 import '../styles/PhotoUpload.css';
 
 const PhotoUpload = ({ onComplete, onPhotosUpdated }) => {
@@ -7,31 +7,19 @@ const PhotoUpload = ({ onComplete, onPhotosUpdated }) => {
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [selectedFiles, setSelectedFiles] = useState([]);
-  const [caption, setCaption] = useState('');
-  const [story, setStory] = useState('');
   const [previewUrls, setPreviewUrls] = useState([]);
   const [message, setMessage] = useState({ text: '', type: '' });
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(null);
   
-  // Promise States
-  const [showPromiseModal, setShowPromiseModal] = useState(false);
-  const [promise, setPromise] = useState('');
-  const [promiseName, setPromiseName] = useState('');
-  const [pendingUpload, setPendingUpload] = useState(null);
+  // Form Fields
+  const [yourName, setYourName] = useState('');
+  const [caption, setCaption] = useState('');
+  const [story, setStory] = useState('');
+  const [yourPromise, setYourPromise] = useState('');
+  const [yourMessage, setYourMessage] = useState('');
   
   const fileInputRef = useRef(null);
   const isUploadingRef = useRef(false);
-
-  const promiseSuggestions = [
-    "I promise to always be there for you...",
-    "I promise to make you laugh every time we meet...",
-    "I promise to celebrate you not just today, but every day...",
-    "I promise to share more beautiful memories with you...",
-    "I promise to remind you how amazing you are...",
-    "I promise to be your biggest cheerleader...",
-    "I promise to create more unforgettable moments with you...",
-    "I promise to love and support you unconditionally..."
-  ];
 
   useEffect(() => {
     loadPhotos();
@@ -55,108 +43,100 @@ const PhotoUpload = ({ onComplete, onPhotosUpdated }) => {
     setPreviewUrls(previews);
   };
 
-  const performUpload = async () => {
-    if (!pendingUpload) return;
-    if (isUploadingRef.current) return;
-    
+  const handleUpload = async () => {
+    // Validation
+    if (selectedFiles.length === 0) {
+      setMessage({ text: 'Please select files to upload', type: 'error' });
+      return;
+    }
+    if (!yourName.trim()) {
+      setMessage({ text: '💝 Please tell us your name! 💝', type: 'error' });
+      return;
+    }
+    if (!caption.trim()) {
+      setMessage({ text: '📝 Please add a caption! 📝', type: 'error' });
+      return;
+    }
+    if (!yourPromise.trim()) {
+      setMessage({ text: '💖 Please write a promise to our birthday queen! 💖', type: 'error' });
+      return;
+    }
+    if (yourPromise.length < 10) {
+      setMessage({ text: '💖 Your promise is too short! Write something meaningful! 💖', type: 'error' });
+      return;
+    }
+
     isUploadingRef.current = true;
     setUploading(true);
     setUploadProgress(0);
+    let successCount = 0;
+
+    for (let i = 0; i < selectedFiles.length; i++) {
+      const file = selectedFiles[i];
+      const fileIsVideo = file.type.startsWith('video/');
+      
+      try {
+        setUploadProgress(((i + 0.5) / selectedFiles.length) * 100);
+        
+        // Create story with promise and name
+        const fullStory = `${story || 'A beautiful memory shared just for you! 💖'}\n\n💝 Promise from ${yourName}: "${yourPromise}"`;
+        
+        // Upload photo
+        const { photoId } = await uploadPhoto(
+          file,
+          caption + (selectedFiles.length > 1 ? ` (${i + 1})` : ''),
+          fullStory,
+          fileIsVideo
+        );
+        
+        // Save promise to promises table
+        if (photoId) {
+          await savePromise(photoId, yourName, yourPromise);
+        }
+        
+        successCount++;
+        setUploadProgress(((i + 1) / selectedFiles.length) * 100);
+      } catch (error) {
+        console.error('Upload error:', error);
+        setMessage({ text: `Failed to upload ${file.name}: ${error.message}`, type: 'error' });
+      }
+    }
+
+    // Save message if provided
+    if (yourMessage.trim() && successCount > 0) {
+      try {
+        await saveMessage(yourName, yourMessage);
+        setMessage({ text: `✨ Plus your message was saved! ✨`, type: 'success' });
+      } catch (error) {
+        console.error('Message save error:', error);
+      }
+    }
+
+    setUploading(false);
+    isUploadingRef.current = false;
     
-    try {
-      const { file, captionText, storyText, isVideo, promiseText, promiseNameText } = pendingUpload;
-      
-      setUploadProgress(30);
-      
-      const storyWithPromise = `${storyText}\n\n💝 Promise from ${promiseNameText}: "${promiseText}"`;
-      
-      await uploadPhoto(
-        file,
-        captionText,
-        storyWithPromise,
-        isVideo
-      );
-      
-      setUploadProgress(100);
-      
+    if (successCount > 0) {
       setMessage({ 
-        text: `✅ Successfully uploaded "${captionText}" with your promise! 🎉`, 
+        text: `✅ Successfully uploaded ${successCount} ${successCount === 1 ? 'memory' : 'memories'}! Thank you ${yourName}! 🎉`, 
         type: 'success' 
       });
       
       // Clear form
       setSelectedFiles([]);
       setPreviewUrls([]);
+      setYourName('');
       setCaption('');
       setStory('');
-      setPendingUpload(null);
+      setYourPromise('');
+      setYourMessage('');
+      setUploadProgress(0);
       if (fileInputRef.current) fileInputRef.current.value = '';
       
       await loadPhotos();
       if (onPhotosUpdated) onPhotosUpdated();
       
       setTimeout(() => setMessage({ text: '', type: '' }), 3000);
-    } catch (error) {
-      console.error('Upload error:', error);
-      setMessage({ text: `Failed to upload: ${error.message}`, type: 'error' });
-    } finally {
-      setUploading(false);
-      isUploadingRef.current = false;
-      setUploadProgress(0);
     }
-  };
-
-  const handleUploadClick = () => {
-    if (selectedFiles.length === 0) {
-      setMessage({ text: 'Please select files to upload', type: 'error' });
-      return;
-    }
-
-    if (!caption.trim()) {
-      setMessage({ text: 'Please add a caption', type: 'error' });
-      return;
-    }
-
-    // Store the upload data and show promise modal
-    setPendingUpload({
-      file: selectedFiles[0], // Only upload first file for now
-      captionText: caption + (selectedFiles.length > 1 ? ` (and ${selectedFiles.length - 1} more)` : ''),
-      storyText: story || `A beautiful memory captured just for you! 💖`,
-      isVideo: selectedFiles[0].type.startsWith('video/')
-    });
-    
-    setShowPromiseModal(true);
-  };
-
-  const handlePromiseSubmit = async () => {
-    if (!promiseName.trim()) {
-      setMessage({ text: '💝 Please tell us who you are! 💝', type: 'error' });
-      return;
-    }
-    if (!promise.trim()) {
-      setMessage({ text: '📝 Please write a promise to our birthday queen! 📝', type: 'error' });
-      return;
-    }
-    if (promise.length < 10) {
-      setMessage({ text: '💖 Your promise is too short! Write something meaningful! 💖', type: 'error' });
-      return;
-    }
-    
-    // Add promise to pending upload
-    setPendingUpload(prev => ({
-      ...prev,
-      promiseText: promise,
-      promiseNameText: promiseName
-    }));
-    
-    setShowPromiseModal(false);
-    
-    // Start upload
-    await performUpload();
-    
-    // Reset promise fields for next upload
-    setPromise('');
-    setPromiseName('');
   };
 
   const handleDelete = async (photo) => {
@@ -181,81 +161,6 @@ const PhotoUpload = ({ onComplete, onPhotosUpdated }) => {
     onComplete();
   };
 
-  const randomSuggestion = promiseSuggestions[Math.floor(Math.random() * promiseSuggestions.length)];
-
-  // Promise Modal
-  if (showPromiseModal) {
-    return (
-      <div className="promise-modal-overlay">
-        <div className="promise-modal">
-          <div className="promise-header">
-            <div className="promise-emoji">💝✨📝✨💝</div>
-            <h2>Make a Promise!</h2>
-            <p>Before sharing your memory, make a special promise to our birthday queen!</p>
-            <p className="promise-upload-count">📸 You're about to share: <strong>"{caption}"</strong></p>
-          </div>
-          
-          <div className="promise-content">
-            <div className="promise-quote">
-              <span>💖</span>
-              "The best gift you can give is a promise kept"
-              <span>💖</span>
-            </div>
-            
-            <div className="promise-form">
-              <div className="promise-input-group">
-                <label>👤 Your Name:</label>
-                <input
-                  type="text"
-                  placeholder="e.g., Your loving sister, Mom, Best Friend..."
-                  value={promiseName}
-                  onChange={(e) => setPromiseName(e.target.value)}
-                  className="promise-name-input"
-                  autoFocus
-                />
-              </div>
-              
-              <div className="promise-input-group">
-                <label>📝 Your Promise:</label>
-                <textarea
-                  placeholder={`Write your heartfelt promise here...\n\nExample: ${randomSuggestion}`}
-                  value={promise}
-                  onChange={(e) => setPromise(e.target.value)}
-                  className="promise-textarea"
-                  rows="5"
-                />
-              </div>
-              
-              <div className="promise-suggestions">
-                <p>💡 Promise Ideas:</p>
-                <div className="suggestion-bubbles">
-                  {promiseSuggestions.slice(0, 4).map((suggestion, idx) => (
-                    <span 
-                      key={idx} 
-                      className="suggestion-bubble"
-                      onClick={() => setPromise(suggestion)}
-                    >
-                      {suggestion}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="promise-footer">
-            <button className="promise-submit-btn" onClick={handlePromiseSubmit}>
-              <span>💝</span>
-              I MAKE THIS PROMISE!
-              <span>💝</span>
-            </button>
-            <p className="promise-note">Your promise will be attached to your photo as a special gift!</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="photo-upload-container">
       <div className="upload-header">
@@ -263,7 +168,7 @@ const PhotoUpload = ({ onComplete, onPhotosUpdated }) => {
           ← Back to Celebration
         </button>
         <h1 className="upload-title">📸 Family Memory Upload 📸</h1>
-        <p className="upload-subtitle">Share your favorite photos and videos of our birthday queen!</p>
+        <p className="upload-subtitle">Share your photos, make a promise, and leave a message for our birthday queen!</p>
       </div>
 
       {message.text && (
@@ -275,13 +180,15 @@ const PhotoUpload = ({ onComplete, onPhotosUpdated }) => {
       <div className="upload-grid">
         {/* Upload Form */}
         <div className="upload-form-card">
-          <h3>✨ Add New Memory ✨</h3>
+          <h3>✨ Share Your Memory ✨</h3>
           
+          {/* File Drop Zone */}
           <div className="file-drop-zone" onClick={() => fileInputRef.current?.click()}>
             <input
               ref={fileInputRef}
               type="file"
               accept="image/*,video/*"
+              multiple
               onChange={handleFileSelect}
               style={{ display: 'none' }}
             />
@@ -307,38 +214,82 @@ const PhotoUpload = ({ onComplete, onPhotosUpdated }) => {
             )}
           </div>
 
+          {/* Form Fields */}
           <div className="upload-form-fields">
-            <input
-              type="text"
-              className="upload-input"
-              placeholder="Caption (e.g., 'Summer Cruise 2024')"
-              value={caption}
-              onChange={(e) => setCaption(e.target.value)}
-            />
-            
-            <textarea
-              className="upload-textarea"
-              placeholder="Story/Memory description (optional)"
-              value={story}
-              onChange={(e) => setStory(e.target.value)}
-              rows="3"
-            />
+            <div className="form-row">
+              <label className="form-label">👤 Your Name *</label>
+              <input
+                type="text"
+                className="upload-input"
+                placeholder="e.g., Your loving sister, Mom, Best Friend..."
+                value={yourName}
+                onChange={(e) => setYourName(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="form-row">
+              <label className="form-label">📷 Caption *</label>
+              <input
+                type="text"
+                className="upload-input"
+                placeholder="e.g., 'Summer Cruise 2024'"
+                value={caption}
+                onChange={(e) => setCaption(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="form-row">
+              <label className="form-label">💝 Your Promise *</label>
+              <textarea
+                className="upload-textarea"
+                placeholder="I promise to always be there for you, to make you laugh, and to cherish every moment with you..."
+                value={yourPromise}
+                onChange={(e) => setYourPromise(e.target.value)}
+                rows="3"
+                required
+              />
+              <small className="field-hint">Write a heartfelt promise to our birthday queen (minimum 10 characters)</small>
+            </div>
+
+            <div className="form-row">
+              <label className="form-label">📖 Memory Story (Optional)</label>
+              <textarea
+                className="upload-textarea"
+                placeholder="Share the story behind this memory..."
+                value={story}
+                onChange={(e) => setStory(e.target.value)}
+                rows="2"
+              />
+            </div>
+
+            <div className="form-row">
+              <label className="form-label">💌 Birthday Message (Optional)</label>
+              <textarea
+                className="upload-textarea"
+                placeholder="Leave a special birthday message for our queen..."
+                value={yourMessage}
+                onChange={(e) => setYourMessage(e.target.value)}
+                rows="2"
+              />
+            </div>
             
             {uploading && (
               <div className="upload-progress">
                 <div className="progress-bar">
                   <div className="progress-fill" style={{ width: `${uploadProgress}%` }}></div>
                 </div>
-                <span>{Math.round(uploadProgress)}% - Uploading with your promise...</span>
+                <span>{Math.round(uploadProgress)}% - Uploading your memory...</span>
               </div>
             )}
             
             <button 
               className="upload-submit-btn"
-              onClick={handleUploadClick}
+              onClick={handleUpload}
               disabled={uploading || selectedFiles.length === 0}
             >
-              {uploading ? '📤 Uploading...' : '💖 Upload & Make Promise 💖'}
+              {uploading ? '📤 Uploading...' : '💖 Share Memory with Promise 💖'}
             </button>
           </div>
         </div>
@@ -380,7 +331,7 @@ const PhotoUpload = ({ onComplete, onPhotosUpdated }) => {
           {photos.length === 0 && (
             <div className="empty-gallery">
               <span>🌸</span>
-              <p>No memories yet. Be the first to upload!</p>
+              <p>No memories yet. Be the first to share!</p>
             </div>
           )}
         </div>
@@ -390,7 +341,7 @@ const PhotoUpload = ({ onComplete, onPhotosUpdated }) => {
         <button className="continue-celebration-btn" onClick={handleContinue}>
           🎂 Back to Celebration 🎂
         </button>
-        <p className="footer-note">💝 Every photo adds to the surprise! Share your love! 💝</p>
+        <p className="footer-note">💝 Your name, promise, and message will appear as a special gift for the birthday queen! 💝</p>
       </div>
     </div>
   );

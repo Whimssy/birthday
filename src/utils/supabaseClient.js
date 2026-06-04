@@ -1,14 +1,10 @@
 import { createClient } from '@supabase/supabase-js';
 
-// YOUR ACTUAL SUPABASE CREDENTIALS
-const SUPABASE_URL = 'https://nafagpnzcwvpjsjetnrv.supabase.co';  // ← Your actual URL (without /rest/v1/)
+const SUPABASE_URL = 'https://nafagpnzcwvpjsjetnrv.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5hZmFncG56Y3d2cGpzamV0bnJ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAxNTI1NDQsImV4cCI6MjA5NTcyODU0NH0.a7Oj9089VVcwReZ9DuXwmiuw4W_ta3N2PrsYUkWqcEU';
 
-console.log('🔌 Connecting to Supabase:', SUPABASE_URL);
-
-// Create client
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-console.log('✅ Supabase client initialized successfully!');
+console.log('✅ Supabase client initialized');
 
 export const PHOTOS_BUCKET = 'sister-photos';
 export const VIDEOS_BUCKET = 'sister-videos';
@@ -20,9 +16,8 @@ export const uploadPhoto = async (file, caption, story, isVideo = false) => {
   const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
   const filePath = fileName;
 
-  console.log('📤 Uploading to bucket:', bucket, 'file:', fileName);
+  console.log('Uploading to bucket:', bucket, 'file:', fileName);
 
-  // Upload file to storage
   const { error: uploadError } = await supabase.storage
     .from(bucket)
     .upload(filePath, file, {
@@ -30,20 +25,16 @@ export const uploadPhoto = async (file, caption, story, isVideo = false) => {
       upsert: false
     });
 
-  if (uploadError) {
-    console.error('Upload error:', uploadError);
-    throw uploadError;
-  }
+  if (uploadError) throw uploadError;
 
-  // Get public URL
   const { data: { publicUrl } } = supabase.storage
     .from(bucket)
     .getPublicUrl(filePath);
 
-  console.log('✅ File uploaded, public URL:', publicUrl);
+  console.log('File uploaded, public URL:', publicUrl);
 
   // Save metadata to database
-  const { error: dbError } = await supabase
+  const { data: photoData, error: dbError } = await supabase
     .from('sister_photos')
     .insert([
       {
@@ -54,18 +45,62 @@ export const uploadPhoto = async (file, caption, story, isVideo = false) => {
         is_video: isVideo,
         uploaded_at: new Date().toISOString()
       }
-    ]);
+    ])
+    .select();
 
-  if (dbError) {
-    console.error('Database error:', dbError);
-    throw dbError;
-  }
+  if (dbError) throw dbError;
 
-  console.log('✅ Metadata saved to database');
-  return publicUrl;
+  console.log('Metadata saved to database', photoData);
+  return { photoId: photoData[0].id, url: publicUrl };
 };
 
-// Get all photos from Supabase
+// Save promise for a photo
+export const savePromise = async (photoId, name, promise) => {
+  const { data, error } = await supabase
+    .from('family_promises')
+    .insert([
+      {
+        photo_id: photoId,
+        name: name,
+        promise: promise,
+        created_at: new Date().toISOString()
+      }
+    ])
+    .select();
+
+  if (error) throw error;
+  return data[0];
+};
+
+// Get all photos with their promises
+export const getPhotosWithPromises = async () => {
+  try {
+    const { data, error } = await supabase
+      .from('sister_photos')
+      .select(`
+        *,
+        family_promises (*)
+      `)
+      .order('uploaded_at', { ascending: false });
+
+    if (error) throw error;
+
+    return data.map(photo => ({
+      id: photo.id,
+      url: photo.url,
+      caption: photo.caption,
+      story: photo.story,
+      isVideo: photo.is_video,
+      storage_path: photo.storage_path,
+      promise: photo.family_promises && photo.family_promises.length > 0 ? photo.family_promises[0] : null
+    }));
+  } catch (err) {
+    console.error('Get photos error:', err);
+    return [];
+  }
+};
+
+// Get all photos (without promises - for backward compatibility)
 export const getPhotos = async () => {
   try {
     const { data, error } = await supabase
@@ -73,12 +108,8 @@ export const getPhotos = async () => {
       .select('*')
       .order('uploaded_at', { ascending: false });
 
-    if (error) {
-      console.error('Get photos error:', error);
-      return [];
-    }
+    if (error) throw error;
 
-    console.log(`📸 Loaded ${data?.length || 0} photos from Supabase`);
     return data.map(photo => ({
       url: photo.url,
       caption: photo.caption,
@@ -97,22 +128,18 @@ export const getPhotos = async () => {
 export const deletePhoto = async (id, storagePath, isVideo) => {
   const bucket = isVideo ? VIDEOS_BUCKET : PHOTOS_BUCKET;
   
-  // Delete from storage
   const { error: storageError } = await supabase.storage
     .from(bucket)
     .remove([storagePath]);
 
   if (storageError) console.error('Storage delete error:', storageError);
 
-  // Delete from database
   const { error: dbError } = await supabase
     .from('sister_photos')
     .delete()
     .eq('id', id);
 
   if (dbError) console.error('DB delete error:', dbError);
-  
-  console.log('🗑️ Photo deleted');
 };
 
 // Get messages
@@ -123,11 +150,7 @@ export const getMessages = async () => {
       .select('*')
       .order('created_at', { ascending: true });
 
-    if (error) {
-      console.error('Get messages error:', error);
-      return [];
-    }
-
+    if (error) throw error;
     return data;
   } catch (err) {
     console.error('Get messages exception:', err);
@@ -149,11 +172,7 @@ export const saveMessage = async (name, message, color) => {
     ])
     .select();
 
-  if (error) {
-    console.error('Save message error:', error);
-    throw error;
-  }
-
+  if (error) throw error;
   return data[0];
 };
 
