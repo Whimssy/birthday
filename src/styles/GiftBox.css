@@ -1,6 +1,9 @@
-/* Cartoon Gift Box Container */
+/* Gift Box Page - Cartoon Vibe */
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700;800&family=Luckiest+Guy&display=swap');
+
 .giftbox-cartoon-container {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+  background: rgba(26, 26, 46, 0.85);
+  backdrop-filter: blur(15px);
   border-radius: 60px;
   padding: 2rem;
   max-width: 1300px;
@@ -9,17 +12,19 @@
   position: relative;
   overflow: hidden;
   animation: fadeInCartoon 0.5s ease-out;
-  box-shadow: 0 30px 50px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 30px 50px rgba(0, 0, 0, 0.4);
+  border: 4px solid #FFD700;
+  font-family: 'Comic Neue', 'Luckiest Guy', cursive;
 }
 
 @keyframes fadeInCartoon {
   from {
     opacity: 0;
-    transform: scale(0.98);
+    transform: scale(0.95) rotate(-1deg);
   }
   to {
     opacity: 1;
-    transform: scale(1);
+    transform: scale(1) rotate(0deg);
   }
 }
 
@@ -38,7 +43,7 @@
   transform: translate(-50%, -50%);
   width: 300px;
   height: 300px;
-  background: radial-gradient(circle, rgba(255,215,0,0.15), transparent);
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.15), transparent);
   border-radius: 50%;
   animation: glowPulseCartoon 3s ease-in-out infinite;
 }
@@ -72,6 +77,7 @@
 
 .hero-title-cartoon {
   font-size: 2rem;
+  font-family: 'Luckiest Guy', cursive;
   background: linear-gradient(135deg, #FFD700, #FF69B4, #4ECDC4);
   -webkit-background-clip: text;
   background-clip: text;
@@ -81,8 +87,8 @@
 }
 
 @keyframes titleGlowCartoon {
-  0%, 100% { filter: drop-shadow(0 0 10px rgba(255,215,0,0.3)); }
-  50% { filter: drop-shadow(0 0 25px rgba(255,215,0,0.6)); }
+  0%, 100% { filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.3)); }
+  50% { filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.6)); }
 }
 
 .title-sparkle-cartoon {
@@ -97,8 +103,9 @@
 }
 
 .hero-subtitle-cartoon {
-  color: #FFB6C1;
+  color: #FFEAA7;
   font-size: 1rem;
+  font-family: 'Comic Neue', cursive;
 }
 
 /* Messages Carousel */
@@ -114,19 +121,19 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.2);
+  background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(10px);
-  border: 2px solid rgba(255,215,0,0.5);
+  border: 2px solid #FFD700;
   font-size: 1.5rem;
   cursor: pointer;
-  color: white;
+  color: #FFD700;
   transition: all 0.3s ease;
 }
 
 .carousel-arrow-cartoon:hover:not(.disabled) {
-  background: rgba(255,255,255,0.4);
+  background: rgba(0, 0, 0, 0.7);
   transform: scale(1.1);
-  border-color: #FFD700;
+  border-color: #FF69B4;
 }
 
 .carousel-arrow-cartoon.disabled {
@@ -142,11 +149,11 @@
 
 .message-card-cartoon {
   position: relative;
-  background: white;
+  background: rgba(255, 255, 255, 0.95);
   border-radius: 50px;
   padding: 2rem;
   text-align: center;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
   border-left: 8px solid;
   animation: cardFlipCartoon 0.5s ease;
   transition: all 0.3s ease;
@@ -174,7 +181,7 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
   animation: cardShineCartoon 3s ease-in-out infinite;
 }
 
@@ -192,7 +199,7 @@
   justify-content: center;
   font-size: 2rem;
   margin: 0 auto 1rem;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   animation: iconPulseCartoon 1.5s ease-in-out infinite;
 }
 
@@ -213,6 +220,7 @@
 .message-from-cartoon {
   font-size: 1rem;
   font-weight: bold;
+  font-family: 'Comic Neue', cursive;
 }
 
 .from-label-cartoon {
@@ -236,6 +244,7 @@
   color: #4a5568;
   margin: 1rem 0;
   font-style: italic;
+  font-family: 'Comic Neue', cursive;
 }
 
 .message-footer-cartoon {
@@ -293,7 +302,7 @@
   text-align: center;
   margin: 15px 0;
   padding: 12px;
-  background: rgba(255,215,0,0.2);
+  background: rgba(255, 215, 0, 0.2);
   border-radius: 60px;
   animation: pulseHintCartoon 1.5s ease-in-out infinite;
   display: flex;
@@ -303,12 +312,8 @@
 }
 
 @keyframes pulseHintCartoon {
-  0%, 100% { background: rgba(255,215,0,0.2); transform: scale(1); }
-  50% { background: rgba(255,215,0,0.4); transform: scale(1.02); }
-}
-
-.hint-pulse-cartoon {
-  position: absolute;
+  0%, 100% { background: rgba(255, 215, 0, 0.2); transform: scale(1); }
+  50% { background: rgba(255, 215, 0, 0.4); transform: scale(1.02); }
 }
 
 .hint-emoji-cartoon {
@@ -321,14 +326,14 @@
   50% { transform: rotate(15deg); }
 }
 
-/* Photos Gallery - Cartoon Style */
+/* Photos Gallery */
 .photos-gallery-cartoon {
   margin: 30px 0;
   padding: 20px;
-  background: rgba(255,255,255,0.08);
+  background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
   border-radius: 60px;
-  border: 2px solid rgba(255,215,0,0.3);
+  border: 2px solid rgba(255, 215, 0, 0.3);
 }
 
 .gallery-header-cartoon {
@@ -368,8 +373,8 @@
 }
 
 @keyframes encouragementPulse {
-  0%, 100% { transform: scale(1); box-shadow: 0 5px 20px rgba(255,105,180,0.3); }
-  50% { transform: scale(1.02); box-shadow: 0 10px 30px rgba(255,105,180,0.5); }
+  0%, 100% { transform: scale(1); box-shadow: 0 5px 20px rgba(255, 105, 180, 0.3); }
+  50% { transform: scale(1.02); box-shadow: 0 10px 30px rgba(255, 105, 180, 0.5); }
 }
 
 .encouragement-emoji {
@@ -383,16 +388,17 @@
 }
 
 .encouragement-text {
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: bold;
   color: white;
   margin: 10px 0;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  font-family: 'Luckiest Guy', cursive;
 }
 
 .blink-text {
   animation: blinkCartoon 1s step-end infinite;
-  background: rgba(0,0,0,0.2);
+  background: rgba(0, 0, 0, 0.2);
   padding: 5px 15px;
   border-radius: 50px;
   display: inline-block;
@@ -408,7 +414,7 @@
 }
 
 .click-counter {
-  background: rgba(0,0,0,0.2);
+  background: rgba(0, 0, 0, 0.2);
   padding: 5px 15px;
   border-radius: 50px;
   font-size: 0.9rem;
@@ -430,13 +436,14 @@
 
 .gallery-title-cartoon {
   text-align: center;
-  color: white;
+  color: #FFD700;
   font-size: 1.5rem;
   margin-bottom: 25px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 15px;
+  font-family: 'Luckiest Guy', cursive;
 }
 
 .gallery-title-cartoon span {
@@ -452,7 +459,7 @@
 /* Masonry Grid */
 .photos-masonry-cartoon {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px;
   padding: 10px;
 }
@@ -466,7 +473,7 @@
   background: linear-gradient(135deg, #f5f0e8, #fff8f0);
   animation: fadeInUpCartoon 0.5s ease backwards;
   transition: all 0.3s ease;
-  border: 3px solid rgba(255,215,0,0.3);
+  border: 3px solid rgba(255, 215, 0, 0.3);
 }
 
 @keyframes fadeInUpCartoon {
@@ -482,13 +489,8 @@
 
 .gallery-photo-item-cartoon:hover {
   transform: scale(1.05);
-  box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
   border-color: #FFD700;
-}
-
-.gallery-photo-item-cartoon.viewed {
-  border-color: #4ECDC4;
-  opacity: 0.9;
 }
 
 .gallery-image-cartoon {
@@ -502,7 +504,6 @@
   transform: scale(1.1);
 }
 
-/* Click Me Badge */
 .click-me-badge {
   position: absolute;
   top: 10px;
@@ -516,36 +517,13 @@
   animation: wiggleCartoon 0.5s ease infinite;
   z-index: 15;
   white-space: nowrap;
+  font-family: 'Luckiest Guy', cursive;
 }
 
 @keyframes wiggleCartoon {
   0%, 100% { transform: rotate(0deg); }
   25% { transform: rotate(5deg); }
   75% { transform: rotate(-5deg); }
-}
-
-.click-arrow {
-  display: block;
-  font-size: 0.6rem;
-  animation: arrowPulse 0.8s ease infinite;
-}
-
-@keyframes arrowPulse {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(3px); }
-}
-
-.viewed-badge {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background: #4ECDC4;
-  padding: 5px 10px;
-  border-radius: 50px;
-  font-size: 0.7rem;
-  font-weight: bold;
-  color: white;
-  z-index: 15;
 }
 
 .video-thumb-cartoon {
@@ -567,7 +545,7 @@
   transform: translate(-50%, -50%);
   width: 50px;
   height: 50px;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0, 0, 0, 0.7);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -578,7 +556,7 @@
 }
 
 .gallery-photo-item-cartoon:hover .video-play-overlay-cartoon {
-  background: rgba(0,0,0,0.9);
+  background: rgba(0, 0, 0, 0.9);
   transform: translate(-50%, -50%) scale(1.1);
 }
 
@@ -587,7 +565,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
   padding: 12px;
   color: white;
   transform: translateY(100%);
@@ -604,6 +582,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-family: 'Comic Neue', cursive;
 }
 
 .view-icon-cartoon {
@@ -632,40 +611,6 @@
   100% { transform: scale(1); }
 }
 
-/* All Viewed Celebration */
-.all-viewed-celebration {
-  margin-top: 20px;
-  text-align: center;
-  animation: slideUpCartoon 0.5s ease;
-}
-
-@keyframes slideUpCartoon {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.all-viewed-content {
-  background: linear-gradient(135deg, #FFD700, #FF69B4);
-  border-radius: 60px;
-  padding: 15px 25px;
-  display: inline-flex;
-  align-items: center;
-  gap: 15px;
-  color: white;
-  font-weight: bold;
-}
-
-.all-viewed-content span {
-  font-size: 1.5rem;
-  animation: sparkleCartoon 1s ease infinite;
-}
-
 /* Photo Modal */
 .photo-modal-cartoon {
   position: fixed;
@@ -673,7 +618,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0,0,0,0.95);
+  background: rgba(0, 0, 0, 0.95);
   backdrop-filter: blur(15px);
   z-index: 2000;
   display: flex;
@@ -704,7 +649,7 @@
   }
   100% {
     opacity: 1;
-    transform: scale(1) rotate(0);
+    transform: scale(1) rotate(0deg);
   }
 }
 
@@ -715,7 +660,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0, 0, 0, 0.7);
   border: 2px solid #FFD700;
   color: white;
   font-size: 1.2rem;
@@ -725,7 +670,7 @@
 }
 
 .modal-close-cartoon:hover {
-  background: rgba(0,0,0,0.9);
+  background: rgba(0, 0, 0, 0.9);
   transform: scale(1.1) rotate(90deg);
 }
 
@@ -749,11 +694,13 @@
   color: #c85b1e;
   font-size: 1.3rem;
   margin-bottom: 0.5rem;
+  font-family: 'Luckiest Guy', cursive;
 }
 
 .modal-caption-cartoon p {
   color: #4a5568;
   line-height: 1.5;
+  font-family: 'Comic Neue', cursive;
 }
 
 .modal-heart-cartoon {
@@ -772,7 +719,64 @@
   animation: heartBeatCartoon 1s ease infinite;
 }
 
-/* Floating Decor */
+/* Restart Section on Main Page */
+.restart-section-cartoon {
+  text-align: center;
+  margin: 2rem 0 1rem;
+  padding: 1rem;
+}
+
+.restart-main-btn-cartoon {
+  background: linear-gradient(135deg, #FFD700, #FF69B4, #4ECDC4);
+  background-size: 200% 200%;
+  border: none;
+  padding: 16px 40px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  border-radius: 80px;
+  color: white;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  transition: all 0.3s ease;
+  margin-bottom: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  animation: gradientShift 3s ease infinite, btnGlow 2s ease-in-out infinite;
+  letter-spacing: 2px;
+  font-family: 'Luckiest Guy', cursive;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes btnGlow {
+  0%, 100% { box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); }
+  50% { box-shadow: 0 15px 35px rgba(255, 215, 0, 0.5); }
+}
+
+.restart-main-btn-cartoon:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 35px rgba(255, 215, 0, 0.6);
+}
+
+.restart-main-hint-cartoon {
+  font-size: 0.85rem;
+  color: #FFEAA7;
+  font-family: 'Comic Neue', cursive;
+  animation: hintPulse 2s ease-in-out infinite;
+}
+
+@keyframes hintPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* Floating Decorations */
 .floating-cartoon-decor {
   position: absolute;
   top: 0;
@@ -816,7 +820,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0,0,0,0.95);
+  background: rgba(0, 0, 0, 0.95);
   backdrop-filter: blur(15px);
   z-index: 3000;
   display: flex;
@@ -842,7 +846,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(circle at center, rgba(255,215,0,0.1), transparent);
+  background: radial-gradient(circle at center, rgba(255, 215, 0, 0.1), transparent);
   animation: backdropGlowCartoon 3s ease-in-out infinite;
 }
 
@@ -858,27 +862,28 @@
   right: 0;
   bottom: 0;
   pointer-events: none;
+  overflow: hidden;
 }
 
 .firework-cartoon {
   position: absolute;
+  bottom: -50px;
   font-size: 1.5rem;
-  animation: fireworkExplodeCartoon 1s ease-out forwards;
+  animation: fireworkRiseCartoon 1.5s ease-out forwards;
   opacity: 0;
 }
 
-@keyframes fireworkExplodeCartoon {
+@keyframes fireworkRiseCartoon {
   0% {
-    opacity: 0;
-    transform: scale(0);
-  }
-  20% {
+    transform: translateY(0) scale(0);
     opacity: 1;
-    transform: scale(1.5);
+  }
+  50% {
+    transform: translateY(-50vh) scale(1);
   }
   100% {
+    transform: translateY(-100vh) scale(1.5);
     opacity: 0;
-    transform: scale(2);
   }
 }
 
@@ -919,6 +924,7 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  font-family: 'Luckiest Guy', cursive;
 }
 
 .title-word-cartoon {
@@ -939,7 +945,7 @@
 }
 
 .celebration-card-cartoon {
-  background: rgba(255,255,255,0.95);
+  background: rgba(255, 255, 255, 0.95);
   border-radius: 60px;
   padding: 2rem;
   margin: 20px auto;
@@ -954,7 +960,11 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(circle at 30% 30%, rgba(255,215,0,0.1), transparent);
+  background: radial-gradient(circle at 30% 30%, rgba(255, 215, 0, 0.1), transparent);
+}
+
+.celebration-text-cartoon {
+  text-align: center;
 }
 
 .big-message-cartoon {
@@ -962,11 +972,13 @@
   font-weight: bold;
   color: #c85b1e;
   margin-bottom: 10px;
+  font-family: 'Luckiest Guy', cursive;
 }
 
 .sub-message-cartoon {
   font-size: 1rem;
   color: #4a5568;
+  font-family: 'Comic Neue', cursive;
 }
 
 .message-divider-cartoon {
@@ -990,106 +1002,6 @@
   margin-top: 15px;
 }
 
-.restart-cartoon-btn {
-  background: linear-gradient(135deg, #FFD700, #FF69B4);
-  border: none;
-  padding: 15px 40px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  border-radius: 60px;
-  color: white;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 15px;
-  transition: all 0.3s ease;
-  margin-top: 20px;
-  animation: btnPulseCartoon 2s ease-in-out infinite;
-}
-
-@keyframes btnPulseCartoon {
-  0%, 100% {
-    transform: scale(1);
-    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-  }
-  50% {
-    transform: scale(1.05);
-    box-shadow: 0 10px 30px rgba(255,215,0,0.5);
-  }
-}
-
-.restart-cartoon-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-}
-
-.restart-icon-cartoon {
-  font-size: 1.3rem;
-  animation: iconSpinCartoon 0.5s ease-in-out infinite;
-}
-
-@keyframes iconSpinCartoon {
-  0%, 100% { transform: rotate(0deg); }
-  50% { transform: rotate(180deg); }
-}
-
-.restart-hint-cartoon {
-  margin-top: 15px;
-  font-size: 0.8rem;
-  color: #FFB6C1;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .giftbox-cartoon-container {
-    padding: 1rem;
-  }
-  
-  .hero-title-cartoon {
-    font-size: 1.2rem;
-  }
-  
-  .message-card-cartoon {
-    padding: 1rem;
-  }
-  
-  .message-text-cartoon {
-    font-size: 0.9rem;
-  }
-  
-  .carousel-arrow-cartoon {
-    width: 35px;
-    height: 35px;
-    font-size: 1rem;
-  }
-  
-  .photos-masonry-cartoon {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 15px;
-  }
-  
-  .click-encouragement {
-    padding: 10px 15px;
-  }
-  
-  .encouragement-text {
-    font-size: 0.9rem;
-  }
-  
-  .click-me-badge {
-    font-size: 0.55rem;
-    padding: 3px 8px;
-  }
-  
-  .celebration-title-cartoon {
-    font-size: 1.5rem;
-  }
-  
-  .big-message-cartoon {
-    font-size: 1.1rem;
-  }
-}
-
 /* Restart Celebration Button */
 .restart-celebration-btn-cartoon {
   background: linear-gradient(135deg, #FFD700, #FF69B4, #4ECDC4);
@@ -1111,23 +1023,7 @@
   animation: gradientShift 3s ease infinite, btnPulseCartoon 2s ease-in-out infinite;
   letter-spacing: 3px;
   text-transform: uppercase;
-  width: auto;
-  min-width: 380px;
-  position: relative;
-  z-index: 100;
   font-family: 'Luckiest Guy', cursive;
-}
-
-@keyframes gradientShift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
 }
 
 @keyframes btnPulseCartoon {
@@ -1152,12 +1048,8 @@
 }
 
 @keyframes iconSpinCartoon {
-  0%, 100% {
-    transform: rotate(0deg);
-  }
-  50% {
-    transform: rotate(180deg);
-  }
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(180deg); }
 }
 
 .restart-text-cartoon {
@@ -1177,15 +1069,11 @@
 }
 
 @keyframes hintFadeCartoon {
-  0%, 100% {
-    opacity: 0.6;
-  }
-  50% {
-    opacity: 1;
-  }
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
 }
 
-/* Final Celebration Floating Hearts */
+/* Final Floating Hearts */
 .final-floating-hearts-cartoon {
   position: absolute;
   top: 0;
@@ -1224,6 +1112,44 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+  .giftbox-cartoon-container {
+    padding: 1rem;
+  }
+  
+  .hero-title-cartoon {
+    font-size: 1.2rem;
+  }
+  
+  .message-card-cartoon {
+    padding: 1rem;
+  }
+  
+  .message-text-cartoon {
+    font-size: 0.9rem;
+  }
+  
+  .carousel-arrow-cartoon {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+  
+  .photos-masonry-cartoon {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 15px;
+  }
+  
+  .click-me-badge {
+    font-size: 0.55rem;
+    padding: 3px 8px;
+  }
+  
+  .restart-main-btn-cartoon {
+    padding: 12px 25px;
+    font-size: 1rem;
+    gap: 10px;
+  }
+  
   .restart-celebration-btn-cartoon {
     padding: 12px 25px;
     font-size: 1rem;
@@ -1246,84 +1172,431 @@
   .final-heart-cartoon {
     font-size: 1rem;
   }
+  
+  .encouragement-text {
+    font-size: 0.8rem;
+  }
+  
+  .click-counter {
+    font-size: 0.7rem;
+  }
 }
 
-/* Restart Section on Main Page */
-.restart-section-cartoon {
-  text-align: center;
-  margin: 2rem 0 1rem;
-  padding: 1rem;
-}
-
-.restart-main-btn-cartoon {
-  background: linear-gradient(135deg, #FFD700, #FF69B4, #4ECDC4);
-  background-size: 200% 200%;
-  border: none;
-  padding: 16px 40px;
-  font-size: 1.3rem;
+/* Promise Badge on Photo */
+.promise-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: linear-gradient(135deg, #FF69B4, #FFD700);
+  padding: 4px 10px;
+  border-radius: 30px;
+  font-size: 0.65rem;
   font-weight: bold;
-  border-radius: 80px;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  z-index: 15;
+  animation: promiseBadgePulse 2s ease-in-out infinite;
+  font-family: 'Luckiest Guy', cursive;
+}
+
+@keyframes promiseBadgePulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+  }
+}
+
+.promise-preview {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 5px;
+  font-size: 0.65rem;
+  color: #FFD700;
+}
+
+.promise-icon {
+  font-size: 0.7rem;
+}
+
+.promise-text-preview {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Modal Promise Section */
+.modal-promise {
+  margin-top: 15px;
+  padding: 15px;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 105, 180, 0.15));
+  border-radius: 30px;
+  border: 2px solid #FFD700;
+  animation: promiseGlow 2s ease-in-out infinite;
+}
+
+@keyframes promiseGlow {
+  0%, 100% {
+    border-color: #FFD700;
+    box-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+  }
+  50% {
+    border-color: #FF69B4;
+    box-shadow: 0 0 15px rgba(255, 105, 180, 0.5);
+  }
+}
+
+.promise-header-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.promise-icon-large {
+  font-size: 1.3rem;
+  animation: promiseIconBounce 1s ease-in-out infinite;
+}
+
+@keyframes promiseIconBounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.promise-title {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #c85b1e;
+  font-family: 'Luckiest Guy', cursive;
+}
+
+.promise-from {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #FF69B4;
+  margin-bottom: 10px;
+}
+
+.promise-from strong {
+  color: #c85b1e;
+}
+
+.promise-text-modal {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #4a5568;
+  font-style: italic;
+  text-align: center;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+}
+
+.promise-seal {
+  text-align: center;
+  font-size: 0.7rem;
+  color: #FFD700;
+  margin-top: 10px;
+  font-style: italic;
+}
+
+.modal-story {
+  color: #4a5568;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .promise-badge {
+    padding: 3px 8px;
+    font-size: 0.55rem;
+  }
+  
+  .promise-title {
+    font-size: 0.7rem;
+  }
+  
+  .promise-text-modal {
+    font-size: 0.8rem;
+  }
+  
+  .promise-from {
+    font-size: 0.7rem;
+  }
+  
+  .promise-icon-large {
+    font-size: 1rem;
+  }
+  
+  .modal-promise {
+    padding: 10px;
+  }
+}
+
+
+/* Promise View Button */
+.promise-view-btn {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  background: linear-gradient(135deg, #FF69B4, #FFD700);
+  border: none;
+  padding: 8px 12px;
+  border-radius: 30px;
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  z-index: 20;
+  font-family: 'Luckiest Guy', cursive;
+  animation: promiseBtnGlow 2s ease-in-out infinite;
+}
+
+@keyframes promiseBtnGlow {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 4px 20px rgba(255, 105, 180, 0.4);
+  }
+}
+
+.promise-view-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #FF69B4, #FFE44D);
+}
+
+/* Promise Popup Modal */
+.promise-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(15px);
+  z-index: 4000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: popupFadeIn 0.3s ease;
+}
+
+@keyframes popupFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.promise-popup {
+  background: linear-gradient(135deg, #fff9f0, #fff0e0);
+  border-radius: 60px;
+  padding: 2rem;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+  position: relative;
+  animation: popupSlideUp 0.4s ease;
+  border: 4px solid #FFD700;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes popupSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.promise-popup-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid #FFD700;
+  color: #FFD700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.promise-popup-close:hover {
+  transform: scale(1.1) rotate(90deg);
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.promise-popup-header {
+  margin-bottom: 20px;
+}
+
+.promise-popup-emoji {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  animation: popupEmojiBounce 1s ease-in-out infinite;
+}
+
+@keyframes popupEmojiBounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.promise-popup-header h2 {
+  font-size: 1.6rem;
+  color: #c85b1e;
+  font-family: 'Luckiest Guy', cursive;
+  margin-bottom: 5px;
+}
+
+.promise-popup-from {
+  background: rgba(255, 215, 0, 0.2);
+  border-radius: 50px;
+  padding: 10px 20px;
+  margin: 15px 0;
+  display: inline-block;
+}
+
+.from-label {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.from-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #FF69B4;
+  margin-left: 8px;
+  font-family: 'Luckiest Guy', cursive;
+}
+
+.promise-popup-text {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #4a5568;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 40px;
+  margin: 20px 0;
+  font-style: italic;
+  position: relative;
+}
+
+.quote-mark {
+  font-size: 2rem;
+  color: #FFD700;
+  font-family: 'Georgia', serif;
+  opacity: 0.5;
+  display: inline-block;
+  margin: 0 5px;
+}
+
+.promise-popup-seal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 0.8rem;
+  color: #FF69B4;
+  margin: 15px 0;
+}
+
+.promise-popup-button {
+  background: linear-gradient(135deg, #FFD700, #FF69B4);
+  border: none;
+  padding: 12px 30px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 50px;
+  color: white;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: all 0.3s ease;
+  font-family: 'Luckiest Guy', cursive;
+}
+
+.promise-popup-button:hover {
+  transform: scale(1.05);
+}
+
+/* Modal Promise Button */
+.modal-promise-btn {
+  background: linear-gradient(135deg, #FF69B4, #FFD700);
+  border: none;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  border-radius: 50px;
   color: white;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 15px;
+  gap: 10px;
+  margin-top: 15px;
   transition: all 0.3s ease;
-  margin-bottom: 15px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-  animation: gradientShift 3s ease infinite, btnGlow 2s ease-in-out infinite;
-  letter-spacing: 2px;
   font-family: 'Luckiest Guy', cursive;
+  width: 100%;
 }
 
-@keyframes btnGlow {
-  0%, 100% {
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-  }
-  50% {
-    box-shadow: 0 15px 35px rgba(255, 215, 0, 0.5);
-  }
+.modal-promise-btn:hover {
+  transform: scale(1.02);
 }
 
-.restart-main-btn-cartoon:hover {
-  transform: scale(1.05);
-  box-shadow: 0 15px 35px rgba(255, 215, 0, 0.6);
-}
-
-.restart-main-hint-cartoon {
-  font-size: 0.85rem;
-  color: #FFEAA7;
-  font-family: 'Comic Neue', cursive;
-  animation: hintPulse 2s ease-in-out infinite;
-}
-
-@keyframes hintPulse {
-  0%, 100% {
-    opacity: 0.6;
-  }
-  50% {
-    opacity: 1;
-  }
-}
-
-/* Responsive for main restart button */
+/* Responsive */
 @media (max-width: 768px) {
-  .restart-main-btn-cartoon {
-    padding: 12px 25px;
-    font-size: 1rem;
-    gap: 10px;
+  .promise-view-btn {
+    padding: 6px 10px;
+    font-size: 0.6rem;
   }
   
-  .restart-icon-cartoon {
+  .promise-popup {
+    padding: 1.5rem;
+    margin: 20px;
+  }
+  
+  .promise-popup-header h2 {
     font-size: 1.2rem;
   }
   
-  .restart-main-hint-cartoon {
-    font-size: 0.7rem;
+  .promise-popup-text {
+    font-size: 0.9rem;
+    padding: 15px;
   }
   
-  .restart-section-cartoon {
-    margin: 1.5rem 0 0.5rem;
+  .from-name {
+    font-size: 1rem;
+  }
+  
+  .promise-popup-button {
+    padding: 10px 25px;
+    font-size: 0.9rem;
   }
 }

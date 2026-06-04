@@ -6,25 +6,61 @@ const GiftBox = ({ onComplete, sisterPhoto, familyPhotos = [], familyMessages = 
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [showFinalCelebration, setShowFinalCelebration] = useState(false);
+  const [showPromisePopup, setShowPromisePopup] = useState(false);
+  const [selectedPromise, setSelectedPromise] = useState(null);
 
-  // Color palette for messages
+  // Extract promise from story text
+  const extractPromise = (story) => {
+    if (!story) return null;
+    const promiseMatch = story.match(/💝 Promise from (.*?): "(.*?)"/);
+    if (promiseMatch) {
+      return {
+        name: promiseMatch[1],
+        promise: promiseMatch[2]
+      };
+    }
+    return null;
+  };
+
+  // Clean story without the promise part
+  const getCleanStory = (story) => {
+    if (!story) return null;
+    const promiseIndex = story.indexOf('💝 Promise from');
+    if (promiseIndex !== -1) {
+      return story.substring(0, promiseIndex).trim();
+    }
+    return story;
+  };
+
+  const handleViewPromise = (photo) => {
+    const promise = extractPromise(photo.story);
+    if (promise) {
+      setSelectedPromise(promise);
+      setShowPromisePopup(true);
+      soundManager.playClick();
+    }
+  };
+
+  const closePromisePopup = () => {
+    setShowPromisePopup(false);
+    setSelectedPromise(null);
+  };
+
   const messageColors = [
-    { primary: '#FF6B6B', light: '#FF6B6B20', name: 'Mom & Dad', gradient: 'linear-gradient(135deg, #FF6B6B, #FF8E8E)' },
-    { primary: '#FF69B4', light: '#FF69B420', name: 'Sister', gradient: 'linear-gradient(135deg, #FF69B4, #FF9ACD)' },
-    { primary: '#FFD700', light: '#FFD70020', name: 'Grandma', gradient: 'linear-gradient(135deg, #FFD700, #FFE44D)' },
-    { primary: '#4ECDC4', light: '#4ECDC420', name: 'Best Friend', gradient: 'linear-gradient(135deg, #4ECDC4, #7DDFD8)' },
-    { primary: '#96CEB4', light: '#96CEB420', name: 'Family', gradient: 'linear-gradient(135deg, #96CEB4, #B8E0CC)' },
-    { primary: '#9B59B6', light: '#9B59B620', name: 'Aunt', gradient: 'linear-gradient(135deg, #9B59B6, #B87CD4)' },
-    { primary: '#3498DB', light: '#3498DB20', name: 'Uncle', gradient: 'linear-gradient(135deg, #3498DB, #6BB5E8)' },
-    { primary: '#E74C3C', light: '#E74C3C20', name: 'Cousin', gradient: 'linear-gradient(135deg, #E74C3C, #F07D70)' }
+    { primary: '#FF6B6B', light: '#FF6B6B20' },
+    { primary: '#FF69B4', light: '#FF69B420' },
+    { primary: '#FFD700', light: '#FFD70020' },
+    { primary: '#4ECDC4', light: '#4ECDC420' },
+    { primary: '#96CEB4', light: '#96CEB420' },
+    { primary: '#9B59B6', light: '#9B59B620' },
+    { primary: '#3498DB', light: '#3498DB20' },
+    { primary: '#E74C3C', light: '#E74C3C20' }
   ];
 
-  // Assign colors to messages
   const messagesWithColors = familyMessages.map((msg, idx) => ({
     ...msg,
     color: messageColors[idx % messageColors.length].primary,
-    lightColor: messageColors[idx % messageColors.length].light,
-    gradient: messageColors[idx % messageColors.length].gradient
+    lightColor: messageColors[idx % messageColors.length].light
   }));
 
   const nextMessage = () => {
@@ -65,26 +101,20 @@ const GiftBox = ({ onComplete, sisterPhoto, familyPhotos = [], familyMessages = 
 
   const currentMessage = messagesWithColors[currentMessageIndex];
 
-  // Final Celebration Component with Restart Button
   if (showFinalCelebration) {
     return (
       <div className="final-celebration-cartoon">
         <div className="celebration-backdrop-cartoon"></div>
         
-        {/* Fireworks Animation */}
         <div className="fireworks-cartoon">
           {[...Array(50)].map((_, i) => (
             <div key={i} className="firework-cartoon" style={{
               left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
               animationDelay: `${Math.random() * 3}s`
-            }}>
-              🎆
-            </div>
+            }}>🎆</div>
           ))}
         </div>
         
-        {/* Floating Hearts */}
         <div className="final-floating-hearts-cartoon">
           {[...Array(60)].map((_, i) => (
             <div key={i} className="final-heart-cartoon" style={{
@@ -99,35 +129,23 @@ const GiftBox = ({ onComplete, sisterPhoto, familyPhotos = [], familyMessages = 
         
         <div className="celebration-content-cartoon">
           <div className="celebration-crown-cartoon">👑🎉👑</div>
-          
-          <h1 className="celebration-title-cartoon">
-            <span className="title-word-cartoon">🎈</span>
-            CONGRATULATIONS!
-            <span className="title-word-cartoon">🎈</span>
-          </h1>
+          <h1 className="celebration-title-cartoon">🎈 CONGRATULATIONS! 🎈</h1>
           
           <div className="celebration-card-cartoon">
             <div className="message-glow-cartoon"></div>
             <div className="celebration-text-cartoon">
               <p className="big-message-cartoon">🎊 YOU DID IT, QUEEN! 🎊</p>
               <p className="sub-message-cartoon">You completed the entire celebration journey!</p>
-              <div className="message-divider-cartoon">
-                <span>⭐</span>
-                <span>✨</span>
-                <span>⭐</span>
-              </div>
-              <p className="blessing-message-cartoon">27 white balloons = 27 amazing years of YOU!</p>
+              <div className="message-divider-cartoon">⭐ ✨ ⭐</div>
               <p className="fun-message-cartoon">You've unlocked all the special surprises! 🎂🎁🎈</p>
             </div>
           </div>
           
-          {/* Prominent Restart Button */}
           <button className="restart-celebration-btn-cartoon" onClick={handleRestart}>
             <span className="restart-icon-cartoon">🔄</span>
             <span className="restart-text-cartoon">EXPERIENCE AGAIN!</span>
             <span className="restart-icon-cartoon">🎮</span>
           </button>
-          
           <p className="restart-hint-cartoon">Click to start a new adventure and celebrate again!</p>
         </div>
       </div>
@@ -136,7 +154,36 @@ const GiftBox = ({ onComplete, sisterPhoto, familyPhotos = [], familyMessages = 
 
   return (
     <div className="giftbox-cartoon-container">
-      {/* Hero Section */}
+      {/* Promise Popup Modal */}
+      {showPromisePopup && selectedPromise && (
+        <div className="promise-popup-overlay" onClick={closePromisePopup}>
+          <div className="promise-popup" onClick={(e) => e.stopPropagation()}>
+            <button className="promise-popup-close" onClick={closePromisePopup}>✕</button>
+            <div className="promise-popup-header">
+              <div className="promise-popup-emoji">💝✨💝</div>
+              <h2>A Special Promise Made For You!</h2>
+            </div>
+            <div className="promise-popup-from">
+              <span className="from-label">From:</span>
+              <span className="from-name">{selectedPromise.name}</span>
+            </div>
+            <div className="promise-popup-text">
+              <span className="quote-mark">"</span>
+              {selectedPromise.promise}
+              <span className="quote-mark">"</span>
+            </div>
+            <div className="promise-popup-seal">
+              <span>💖</span>
+              This promise is sealed with love
+              <span>💖</span>
+            </div>
+            <button className="promise-popup-button" onClick={closePromisePopup}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="giftbox-hero-cartoon">
         <div className="hero-glow-cartoon"></div>
         <div className="hero-content-cartoon">
@@ -150,7 +197,7 @@ const GiftBox = ({ onComplete, sisterPhoto, familyPhotos = [], familyMessages = 
             SURPRISE! A SPECIAL GIFT FOR YOU!
             <span className="title-sparkle-cartoon">✨</span>
           </h1>
-          <p className="hero-subtitle-cartoon">Messages and memories from everyone who loves you!</p>
+          <p className="hero-subtitle-cartoon">Messages, memories, and promises from everyone who loves you!</p>
         </div>
       </div>
 
@@ -158,35 +205,19 @@ const GiftBox = ({ onComplete, sisterPhoto, familyPhotos = [], familyMessages = 
       {messagesWithColors.length > 0 && (
         <>
           <div className="messages-carousel-cartoon">
-            <button 
-              className={`carousel-arrow-cartoon prev ${currentMessageIndex === 0 ? 'disabled' : ''}`} 
-              onClick={prevMessage} 
-              disabled={currentMessageIndex === 0}
-            >
-              ◀
-            </button>
+            <button className={`carousel-arrow-cartoon prev ${currentMessageIndex === 0 ? 'disabled' : ''}`} onClick={prevMessage} disabled={currentMessageIndex === 0}>◀</button>
             
             <div className="message-card-container-cartoon">
-              <div 
-                className="message-card-cartoon"
-                style={{ 
-                  background: `linear-gradient(135deg, ${currentMessage?.lightColor || '#FF6B6B20'}, rgba(255,255,255,0.98))`,
-                  borderLeftColor: currentMessage?.color || '#FF6B6B'
-                }}
-              >
+              <div className="message-card-cartoon" style={{ background: `linear-gradient(135deg, ${currentMessage?.lightColor || '#FF6B6B20'}, rgba(255,255,255,0.98))`, borderLeftColor: currentMessage?.color || '#FF6B6B' }}>
                 <div className="card-shine-cartoon"></div>
-                <div className="message-icon-cartoon" style={{ background: `linear-gradient(135deg, ${currentMessage?.color || '#FF6B6B'}, ${currentMessage?.color || '#FF6B6B'}dd)` }}>
-                  💌
-                </div>
+                <div className="message-icon-cartoon" style={{ background: currentMessage?.color || '#FF6B6B' }}>💌</div>
                 <div className="message-header-cartoon">
                   <span className="message-from-cartoon" style={{ color: currentMessage?.color || '#FF6B6B' }}>
                     <span className="from-label-cartoon">From:</span> {currentMessage?.name || 'Family'}
                   </span>
                   <span className="message-heart-cartoon">❤️</span>
                 </div>
-                <div className="message-text-cartoon">
-                  "{currentMessage?.message || 'Happy Birthday! You are so loved!'}"
-                </div>
+                <div className="message-text-cartoon">"{currentMessage?.message || 'Happy Birthday! You are so loved!'}"</div>
                 <div className="message-footer-cartoon">
                   <span className="message-emoji-cartoon">🎂</span>
                   <span className="message-date-cartoon">With love on your special day</span>
@@ -195,22 +226,12 @@ const GiftBox = ({ onComplete, sisterPhoto, familyPhotos = [], familyMessages = 
               </div>
             </div>
 
-            <button 
-              className={`carousel-arrow-cartoon next ${currentMessageIndex === messagesWithColors.length - 1 ? 'disabled' : ''}`} 
-              onClick={nextMessage}
-            >
-              ▶
-            </button>
+            <button className={`carousel-arrow-cartoon next ${currentMessageIndex === messagesWithColors.length - 1 ? 'disabled' : ''}`} onClick={nextMessage}>▶</button>
           </div>
 
           <div className="message-progress-cartoon">
             {messagesWithColors.map((msg, idx) => (
-              <span 
-                key={idx} 
-                className={`progress-dot-cartoon ${idx === currentMessageIndex ? 'active' : ''}`}
-                style={{ background: idx === currentMessageIndex ? msg.color : '#ddd' }}
-                onClick={() => goToMessage(idx)}
-              />
+              <span key={idx} className={`progress-dot-cartoon ${idx === currentMessageIndex ? 'active' : ''}`} style={{ background: idx === currentMessageIndex ? msg.color : '#ddd' }} onClick={() => goToMessage(idx)} />
             ))}
           </div>
           
@@ -232,7 +253,7 @@ const GiftBox = ({ onComplete, sisterPhoto, familyPhotos = [], familyMessages = 
         </>
       )}
 
-      {/* Family Photos Gallery */}
+      {/* Family Photos Gallery with Promise Buttons */}
       {familyPhotos.length > 0 && (
         <div className="photos-gallery-cartoon">
           <div className="gallery-header-cartoon">
@@ -243,8 +264,11 @@ const GiftBox = ({ onComplete, sisterPhoto, familyPhotos = [], familyMessages = 
           <div className="click-encouragement">
             <div className="encouragement-emoji">👉💖👈</div>
             <p className="encouragement-text">
-              <span className="blink-text">CLICK ON ANY PHOTO</span> to see it up close!
+              <span className="blink-text">CLICK ON ANY PHOTO</span> to see the memory
             </p>
+            <div className="encouragement-stats">
+              <span className="click-counter">📸 {familyPhotos.length} beautiful memories with promises!</span>
+            </div>
             <div className="encouragement-arrow">⬇️ TAP ANY PHOTO BELOW ⬇️</div>
           </div>
           
@@ -255,38 +279,52 @@ const GiftBox = ({ onComplete, sisterPhoto, familyPhotos = [], familyMessages = 
           </h2>
           
           <div className="photos-masonry-cartoon">
-            {familyPhotos.map((photo, idx) => (
-              <div 
-                key={idx} 
-                className="gallery-photo-item-cartoon"
-                onClick={() => openPhotoModal(photo)}
-                style={{ animationDelay: `${idx * 0.05}s` }}
-              >
-                {photo.isVideo ? (
-                  <div className="video-thumb-cartoon">
-                    <video src={photo.url} className="gallery-video-preview-cartoon" muted />
-                    <div className="video-play-overlay-cartoon">
-                      <span>▶</span>
+            {familyPhotos.map((photo, idx) => {
+              const promise = extractPromise(photo.story);
+              
+              return (
+                <div 
+                  key={idx} 
+                  className="gallery-photo-item-cartoon"
+                  onClick={() => openPhotoModal(photo)}
+                  style={{ animationDelay: `${idx * 0.05}s` }}
+                >
+                  {photo.isVideo ? (
+                    <div className="video-thumb-cartoon">
+                      <video src={photo.url} className="gallery-video-preview-cartoon" muted />
+                      <div className="video-play-overlay-cartoon">▶</div>
                     </div>
+                  ) : (
+                    <img src={photo.url} alt={photo.caption} className="gallery-image-cartoon" />
+                  )}
+                  <div className="photo-caption-overlay-cartoon">
+                    <p>{photo.caption}</p>
+                    <span className="view-icon-cartoon">🔍 CLICK TO VIEW</span>
                   </div>
-                ) : (
-                  <img src={photo.url} alt={photo.caption} className="gallery-image-cartoon" />
-                )}
-                <div className="photo-caption-overlay-cartoon">
-                  <p>{photo.caption}</p>
-                  <span className="view-icon-cartoon">🔍 CLICK TO VIEW</span>
+                  
+                  {/* Promise Button */}
+                  {promise && (
+                    <button 
+                      className="promise-view-btn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleViewPromise(photo);
+                      }}
+                    >
+                      <span>💝</span>
+                      View Promise
+                      <span>✨</span>
+                    </button>
+                  )}
+                  
+                  <div className="click-me-badge">👆 CLICK ME!</div>
                 </div>
-                <div className="photo-heart-overlay-cartoon">💖</div>
-                <div className="click-me-badge">
-                  <span>👆 CLICK ME!</span>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}
 
-      {/* RESTART BUTTON - Added here on the main page */}
       <div className="restart-section-cartoon">
         <button className="restart-main-btn-cartoon" onClick={handleRestart}>
           <span className="restart-icon-cartoon">🔄</span>
@@ -310,7 +348,26 @@ const GiftBox = ({ onComplete, sisterPhoto, familyPhotos = [], familyMessages = 
             </div>
             <div className="modal-caption-cartoon">
               <h3>{selectedPhoto.caption}</h3>
-              <p>{selectedPhoto.story || "A beautiful memory shared just for you 💝"}</p>
+              <p className="modal-story">{getCleanStory(selectedPhoto.story)}</p>
+              
+              {/* Promise Button in Modal */}
+              {(() => {
+                const promise = extractPromise(selectedPhoto.story);
+                if (promise) {
+                  return (
+                    <button 
+                      className="modal-promise-btn"
+                      onClick={() => handleViewPromise(selectedPhoto)}
+                    >
+                      <span>💝</span>
+                      Read the Promise Made For You
+                      <span>✨</span>
+                    </button>
+                  );
+                }
+                return null;
+              })()}
+              
               <div className="modal-heart-cartoon">
                 <span>💖</span>
                 <span>DOUBLE TAP TO CLOSE</span>

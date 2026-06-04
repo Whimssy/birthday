@@ -37,7 +37,7 @@ const PhotoCarousel = ({ photos, onComplete }) => {
     if (isAutoPlaying && photos && photos.length > 0 && !videoPlaying) {
       interval = setInterval(() => {
         nextSlide();
-      }, 5000);
+      }, 6000);
     }
     return () => clearInterval(interval);
   }, [isAutoPlaying, nextSlide, photos, videoPlaying]);
@@ -108,14 +108,6 @@ const PhotoCarousel = ({ photos, onComplete }) => {
                     onPlay={handleVideoPlay}
                     onPause={handleVideoPause}
                     onEnded={handleVideoEnded}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      maxHeight: '450px',
-                      objectFit: 'contain',
-                      background: 'linear-gradient(135deg, #1a1a2e, #16213e)',
-                      borderRadius: '30px'
-                    }}
                   >
                     Your browser does not support the video tag.
                   </video>

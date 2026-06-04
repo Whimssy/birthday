@@ -458,3 +458,452 @@
       grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     }
   }
+
+  /* Promise Modal */
+.promise-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(15px);
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: promiseFadeIn 0.5s ease;
+}
+
+@keyframes promiseFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.promise-modal {
+  background: linear-gradient(135deg, #fff9f0, #fff0e0);
+  border-radius: 80px;
+  padding: 2rem;
+  max-width: 600px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+  animation: promiseSlideUp 0.5s ease;
+  border: 4px solid #FFD700;
+}
+
+@keyframes promiseSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.promise-header {
+  margin-bottom: 20px;
+}
+
+.promise-emoji {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  animation: promiseEmojiWave 1s ease-in-out infinite;
+}
+
+@keyframes promiseEmojiWave {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(10deg); }
+  75% { transform: rotate(-10deg); }
+}
+
+.promise-header h2 {
+  font-size: 1.8rem;
+  color: #c85b1e;
+  font-family: 'Luckiest Guy', cursive;
+  margin-bottom: 10px;
+}
+
+.promise-header p {
+  color: #666;
+  font-size: 1rem;
+}
+
+.promise-quote {
+  background: linear-gradient(135deg, #FF69B4, #FFD700);
+  border-radius: 60px;
+  padding: 15px;
+  margin: 20px 0;
+  color: white;
+  font-style: italic;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.promise-quote span {
+  font-size: 1.2rem;
+  animation: quoteHeartBeat 1s ease-in-out infinite;
+}
+
+@keyframes quoteHeartBeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+.promise-form {
+  text-align: left;
+  margin: 20px 0;
+}
+
+.promise-input-group {
+  margin-bottom: 20px;
+}
+
+.promise-input-group label {
+  display: block;
+  font-weight: bold;
+  color: #c85b1e;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.promise-name-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #FFD700;
+  border-radius: 30px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  font-family: 'Comic Neue', cursive;
+}
+
+.promise-name-input:focus {
+  outline: none;
+  border-color: #FF69B4;
+  box-shadow: 0 0 10px rgba(255, 105, 180, 0.3);
+}
+
+.promise-textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #FFD700;
+  border-radius: 30px;
+  font-size: 1rem;
+  resize: vertical;
+  font-family: 'Comic Neue', cursive;
+  transition: all 0.3s ease;
+}
+
+.promise-textarea:focus {
+  outline: none;
+  border-color: #FF69B4;
+  box-shadow: 0 0 10px rgba(255, 105, 180, 0.3);
+}
+
+.promise-suggestions {
+  margin-top: 15px;
+}
+
+.promise-suggestions p {
+  font-size: 0.8rem;
+  color: #999;
+  margin-bottom: 10px;
+}
+
+.suggestion-bubbles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.suggestion-bubble {
+  background: rgba(255, 215, 0, 0.2);
+  padding: 6px 12px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid #FFD700;
+  color: #c85b1e;
+}
+
+.suggestion-bubble:hover {
+  background: #FFD700;
+  color: white;
+  transform: scale(1.02);
+}
+
+.promise-footer {
+  margin-top: 25px;
+}
+
+.promise-submit-btn {
+  background: linear-gradient(135deg, #FFD700, #FF69B4);
+  border: none;
+  padding: 14px 30px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 60px;
+  color: white;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.3s ease;
+  font-family: 'Luckiest Guy', cursive;
+  letter-spacing: 1px;
+  animation: promiseBtnPulse 2s ease-in-out infinite;
+}
+
+@keyframes promiseBtnPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+  }
+}
+
+.promise-submit-btn:hover {
+  transform: scale(1.05);
+}
+
+.promise-note {
+  margin-top: 15px;
+  font-size: 0.7rem;
+  color: #999;
+}
+
+/* Promise Banner after submission */
+.promise-banner {
+  background: linear-gradient(135deg, #4ECDC4, #2ECC71);
+  border-radius: 30px;
+  padding: 12px 20px;
+  margin-bottom: 20px;
+  animation: promiseBannerSlide 0.5s ease;
+}
+
+@keyframes promiseBannerSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.promise-banner-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.promise-banner-icon {
+  font-size: 1.5rem;
+  animation: iconBounce 1s ease-in-out infinite;
+}
+
+@keyframes iconBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+.promise-banner-text {
+  text-align: center;
+}
+
+.promise-banner-text strong {
+  color: white;
+  font-size: 0.9rem;
+  display: block;
+}
+
+.promise-banner-text p {
+  color: white;
+  font-size: 0.8rem;
+  margin-top: 3px;
+  font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .promise-modal {
+    padding: 1.5rem;
+    margin: 20px;
+  }
+  
+  .promise-header h2 {
+    font-size: 1.3rem;
+  }
+  
+  .promise-quote {
+    font-size: 0.75rem;
+    padding: 10px;
+  }
+  
+  .promise-submit-btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+  
+  .suggestion-bubble {
+    font-size: 0.65rem;
+    padding: 4px 10px;
+  }
+  
+  .promise-banner-text strong {
+    font-size: 0.75rem;
+  }
+  
+  .promise-banner-text p {
+    font-size: 0.65rem;
+  }
+}
+
+/* Promise Reminder Banner */
+.promise-reminder-banner {
+  background: linear-gradient(135deg, #FFD700, #FF69B4);
+  border-radius: 30px;
+  padding: 12px 20px;
+  margin-bottom: 20px;
+  animation: promiseReminderPulse 2s ease-in-out infinite;
+}
+
+@keyframes promiseReminderPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+  }
+  50% {
+    transform: scale(1.01);
+    box-shadow: 0 8px 25px rgba(255, 105, 180, 0.4);
+  }
+}
+
+.promise-reminder-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.promise-reminder-icon {
+  font-size: 1.5rem;
+  animation: reminderIconBounce 1s ease-in-out infinite;
+}
+
+@keyframes reminderIconBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+.promise-reminder-text {
+  text-align: center;
+}
+
+.promise-reminder-text strong {
+  color: white;
+  font-size: 0.9rem;
+  display: block;
+  font-family: 'Luckiest Guy', cursive;
+}
+
+.promise-reminder-text p {
+  color: white;
+  font-size: 0.75rem;
+  margin-top: 3px;
+}
+
+/* Promise Modal Skip Button */
+.promise-skip-btn {
+  background: transparent;
+  border: 2px solid #FFD700;
+  padding: 10px 25px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  border-radius: 60px;
+  color: #c85b1e;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: all 0.3s ease;
+  font-family: 'Comic Neue', cursive;
+}
+
+.promise-skip-btn:hover {
+  background: rgba(255, 215, 0, 0.2);
+  transform: scale(1.02);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .promise-reminder-text strong {
+    font-size: 0.75rem;
+  }
+  
+  .promise-reminder-text p {
+    font-size: 0.65rem;
+  }
+  
+  .promise-reminder-icon {
+    font-size: 1.2rem;
+  }
+  
+  .promise-skip-btn {
+    padding: 8px 20px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Progress Bar */
+.upload-progress {
+  margin: 10px 0;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #FFD700, #FF69B4);
+  transition: width 0.3s ease;
+  border-radius: 10px;
+}
+
+.upload-progress span {
+  font-size: 0.7rem;
+  color: #666;
+  display: block;
+  text-align: center;
+  margin-top: 5px;
+}
+
+/* Promise Modal Upload Count */
+.promise-upload-count {
+  font-size: 0.85rem;
+  color: #FF69B4;
+  margin-top: 5px;
+  font-weight: bold;
+}

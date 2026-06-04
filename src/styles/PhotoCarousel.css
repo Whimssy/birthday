@@ -4,9 +4,9 @@
 .carousel-container {
   background: rgba(26, 26, 46, 0.85);
   backdrop-filter: blur(15px);
-  border-radius: 80px;
+  border-radius: 60px;
   padding: 2rem;
-  max-width: 1200px;
+  max-width: 1300px;
   width: 100%;
   position: relative;
   overflow: hidden;
@@ -14,6 +14,7 @@
   box-shadow: 0 30px 50px rgba(0, 0, 0, 0.4);
   border: 4px solid #FFD700;
   font-family: 'Comic Neue', 'Luckiest Guy', cursive;
+  margin: 0 auto;
 }
 
 @keyframes fadeInScaleCartoon {
@@ -61,6 +62,7 @@
   color: #FFEAA7;
 }
 
+/* Main Carousel */
 .carousel-main {
   display: flex;
   align-items: center;
@@ -84,6 +86,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .carousel-nav:hover {
@@ -119,6 +122,7 @@
   }
 }
 
+/* Photo Wrapper - Desktop */
 .photo-wrapper {
   flex: 1;
   position: relative;
@@ -141,6 +145,38 @@
   transform: scale(1.03);
 }
 
+.image-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-fallback {
+  width: 100%;
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #FFD700, #FF69B4);
+  border-radius: 40px;
+  color: white;
+  text-align: center;
+}
+
+.fallback-emoji {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.image-fallback p {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* Photo Story - Desktop */
 .photo-story {
   flex: 1;
   padding: 20px;
@@ -160,7 +196,7 @@
   margin-bottom: 20px;
   color: white;
   font-weight: bold;
-  font-family: 'Luckiest Guy', cursive;
+  font-size: 0.9rem;
 }
 
 .badge-icon {
@@ -172,20 +208,24 @@
 }
 
 .photo-title {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   color: #FFD700;
   margin-bottom: 15px;
   font-family: 'Luckiest Guy', cursive;
   text-shadow: 2px 2px 0px #FF69B4;
+  line-height: 1.3;
+  word-break: break-word;
 }
 
 .photo-description {
-  font-size: 1rem;
+  font-size: 1.1rem;
   line-height: 1.6;
   color: #FFEAA7;
   margin-bottom: 20px;
+  word-break: break-word;
 }
 
+/* Growth Marker */
 .growth-marker {
   margin-top: 20px;
 }
@@ -209,10 +249,11 @@
 .growth-stats {
   display: flex;
   justify-content: space-between;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   color: #FFEAA7;
 }
 
+/* Thumbnails - Desktop */
 .carousel-thumbnails {
   display: flex;
   justify-content: center;
@@ -232,6 +273,7 @@
   position: relative;
   padding: 0;
   background: rgba(0, 0, 0, 0.5);
+  flex-shrink: 0;
 }
 
 .thumbnail img {
@@ -268,6 +310,7 @@
   opacity: 1;
 }
 
+/* Controls - Desktop */
 .carousel-controls {
   display: flex;
   justify-content: center;
@@ -311,21 +354,22 @@
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
-/* Video Styles */
+/* Video Styles - Desktop */
 .video-container {
   position: relative;
   width: 100%;
   border-radius: 40px;
   overflow: hidden;
   background: rgba(0, 0, 0, 0.5);
+  min-height: 450px;
 }
 
 .carousel-video {
   width: 100%;
-  height: 100%;
-  max-height: 450px;
+  height: 450px;
   object-fit: contain;
   border-radius: 40px;
+  background: #000;
 }
 
 .video-overlay-badge {
@@ -392,6 +436,7 @@
   height: 100%;
   pointer-events: none;
   z-index: 1;
+  overflow: hidden;
 }
 
 .floating-heart {
@@ -418,34 +463,31 @@
   }
 }
 
-/* Responsive */
+/* ============================================ */
+/* MOBILE RESPONSIVE - WIDER & BIGGER ON PHONES */
+/* ============================================ */
+
 @media (max-width: 768px) {
   .carousel-container {
+    background: rgba(26, 26, 46, 0.9);
+    border-radius: 30px;
     padding: 1rem;
-    margin: 20px;
+    width: 95%;
+    min-width: 320px;
+    margin: 10px auto;
   }
   
-  .slide-content {
-    flex-direction: column;
-    padding: 15px;
-  }
-  
-  .carousel-photo {
-    height: 250px;
-  }
-  
-  .photo-title {
+  .carousel-title {
     font-size: 1.2rem;
   }
   
-  .photo-description {
-    font-size: 0.85rem;
+  .carousel-subtitle {
+    font-size: 0.7rem;
   }
   
-  .thumbnail {
-    width: 50px;
-    height: 50px;
-    border-radius: 15px;
+  .carousel-main {
+    gap: 10px;
+    margin: 15px 0;
   }
   
   .carousel-nav {
@@ -454,7 +496,228 @@
     font-size: 1rem;
   }
   
+  .slide-content {
+    flex-direction: column;
+    padding: 15px;
+    gap: 15px;
+    border-radius: 30px;
+  }
+  
+  /* BIGGER IMAGES ON MOBILE */
+  .photo-wrapper {
+    min-height: 280px;
+    border-radius: 25px;
+  }
+  
+  .carousel-photo {
+    height: 280px;
+    border-radius: 25px;
+  }
+  
+  .image-container {
+    min-height: 280px;
+  }
+  
+  .image-fallback {
+    height: 280px;
+    border-radius: 25px;
+  }
+  
+  .image-fallback p {
+    font-size: 0.9rem;
+  }
+  
+  .fallback-emoji {
+    font-size: 2.5rem;
+  }
+  
+  /* BIGGER VIDEO ON MOBILE */
+  .video-container {
+    min-height: 280px;
+    border-radius: 25px;
+  }
+  
+  .carousel-video {
+    height: 280px;
+    border-radius: 25px;
+  }
+  
+  /* LARGER TEXT ON MOBILE */
+  .photo-story {
+    padding: 10px;
+  }
+  
+  .photo-title {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  .photo-description {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    margin-bottom: 12px;
+  }
+  
+  .story-badge {
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    font-size: 0.7rem;
+  }
+  
+  .badge-icon {
+    font-size: 0.8rem;
+  }
+  
+  .badge-text {
+    font-size: 0.65rem;
+  }
+  
+  .growth-marker {
+    margin-top: 12px;
+  }
+  
+  .growth-line {
+    height: 6px;
+  }
+  
+  .growth-stats {
+    font-size: 0.55rem;
+    gap: 5px;
+  }
+  
+  /* BIGGER THUMBNAILS ON MOBILE */
+  .carousel-thumbnails {
+    gap: 10px;
+    margin: 20px 0;
+  }
+  
+  .thumbnail {
+    width: 55px;
+    height: 55px;
+    border-radius: 12px;
+  }
+  
+  .thumbnail-overlay {
+    font-size: 0.7rem;
+  }
+  
+  /* BIGGER BUTTONS ON MOBILE */
+  .carousel-controls {
+    gap: 12px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+  }
+  
+  .auto-play-btn,
+  .continue-celebration {
+    padding: 10px 20px;
+    font-size: 0.8rem;
+    border-radius: 50px;
+  }
+  
+  .video-overlay-badge {
+    font-size: 0.6rem;
+    padding: 4px 10px;
+    top: 10px;
+    right: 10px;
+  }
+  
+  .video-tip {
+    font-size: 0.7rem;
+    padding: 6px 10px;
+    margin: 10px 0;
+  }
+  
+  .video-icon {
+    font-size: 1.2rem;
+  }
+  
+  .video-play-icon {
+    width: 20px;
+    height: 20px;
+    font-size: 0.5rem;
+  }
+}
+
+/* Small phones (iPhone SE, Galaxy S8) */
+@media (max-width: 480px) {
+  .carousel-container {
+    padding: 0.8rem;
+    width: 98%;
+  }
+  
   .carousel-title {
-    font-size: 1.3rem;
+    font-size: 1rem;
+  }
+  
+  .carousel-subtitle {
+    font-size: 0.6rem;
+  }
+  
+  .carousel-nav {
+    width: 32px;
+    height: 32px;
+    font-size: 0.8rem;
+  }
+  
+  .slide-content {
+    padding: 12px;
+    gap: 12px;
+  }
+  
+  .photo-wrapper {
+    min-height: 240px;
+  }
+  
+  .carousel-photo {
+    height: 240px;
+  }
+  
+  .image-container {
+    min-height: 240px;
+  }
+  
+  .image-fallback {
+    height: 240px;
+  }
+  
+  .video-container {
+    min-height: 240px;
+  }
+  
+  .carousel-video {
+    height: 240px;
+  }
+  
+  .photo-title {
+    font-size: 1rem;
+  }
+  
+  .photo-description {
+    font-size: 0.75rem;
+  }
+  
+  .story-badge {
+    padding: 4px 10px;
+  }
+  
+  .badge-text {
+    font-size: 0.55rem;
+  }
+  
+  .growth-stats {
+    font-size: 0.5rem;
+  }
+  
+  .thumbnail {
+    width: 45px;
+    height: 45px;
+    border-radius: 10px;
+  }
+  
+  .auto-play-btn,
+  .continue-celebration {
+    padding: 8px 16px;
+    font-size: 0.7rem;
   }
 }

@@ -21,66 +21,22 @@ function App() {
 
   const specialEditedPhoto = "/edited-sister.jpg";
 
-  // Default photos - using local files from public folder
   const defaultPhotos = [
-    {
-      url: "/photo1.jpeg",
-      caption: "The Beautiful Beginning",
-      story: "A bright-eyed girl with dreams as vast as the ocean. Full of laughter, curiosity, and endless potential.",
-      isVideo: false
-    },
-    {
-      url: "/photo2.jpeg",
-      caption: "Finding Her Wave",
-      story: "As she grew, she discovered her strength. Like the ocean, she learned to be both gentle and powerful.",
-      isVideo: false
-    },
-    {
-      url: "/photo3.jpeg",
-      caption: "Discovering Her Worth",
-      story: "She realized she was a diamond - rare, precious, and unbreakable.",
-      isVideo: false
-    },
-    {
-      url: "/photo4.jpeg",
-      caption: "Claiming Her Crown",
-      story: "She became the queen of her own destiny. Independent, fierce, and unstoppable.",
-      isVideo: false
-    },
-    {
-      url: "/photo5.jpeg",
-      caption: "Radiating Excellence",
-      story: "Her light grew brighter with each passing year. Elegant, smart, and utterly captivating.",
-      isVideo: false
-    },
-    {
-      url: "/photo8.jpeg",
-      caption: "The Birthday Goddess",
-      story: "Today we celebrate the masterpiece she has become. Beautiful inside and out. Strong and shining!",
-      isVideo: false
-    }
+    { url: "/Photos/photo1.jpeg", caption: "The Beautiful Beginning", story: "A bright-eyed girl with dreams as vast as the ocean.", isVideo: false },
+    { url: "/Photos/photo2.jpeg", caption: "Finding Her Wave", story: "As she grew, she discovered her strength.", isVideo: false },
+    { url: "/Photos/photo3.jpeg", caption: "Discovering Her Worth", story: "She realized she was a diamond - rare and precious.", isVideo: false },
+    { url: "/Photos/photo4.jpeg", caption: "Claiming Her Crown", story: "She became the queen of her own destiny.", isVideo: false },
+    { url: "/Photos/photo5.jpeg", caption: "Radiating Excellence", story: "Her light grew brighter with each passing year.", isVideo: false },
+    { url: "/Photos/photo8.jpeg", caption: "The Birthday Goddess", story: "Today we celebrate the masterpiece she has become!", isVideo: false }
   ];
 
-  // Default videos - using local files from public/Photos folder
   const defaultVideos = [
-    {
-      url: "/Photos/birthday-video1.mp4",
-      caption: "🎬 Special Video Message",
-      story: "A heartwarming video message filled with love and celebration just for you!",
-      isVideo: true
-    },
-    {
-      url: "/Photos/birthday-video2.mp4",
-      caption: "🎬 Celebration & Memories",
-      story: "Beautiful memories and celebration moments compiled just for you.",
-      isVideo: true
-    }
+    { url: "/Photos/birthday-video1.mp4", caption: "🎬 Special Video Message", story: "A heartwarming video message filled with love!", isVideo: true },
+    { url: "/Photos/birthday-video2.mp4", caption: "🎬 Celebration & Memories", story: "Beautiful memories compiled just for you.", isVideo: true }
   ];
 
-  // Combine default photos + videos for carousel
   const allDefaultMedia = [...defaultPhotos, ...defaultVideos];
 
-  // Initialize sound manager
   useEffect(() => {
     soundManager.init();
     
@@ -99,16 +55,10 @@ function App() {
     };
   }, []);
 
-  // Load family photos from Supabase
   const loadFamilyPhotos = useCallback(async () => {
     try {
       const photos = await getPhotos();
-      
-      if (photos && photos.length > 0) {
-        setFamilyPhotos(photos);
-      } else {
-        setFamilyPhotos([]);
-      }
+      setFamilyPhotos(photos && photos.length > 0 ? photos : []);
       setPhotosLoaded(true);
     } catch (error) {
       console.error('Error loading family photos:', error);
@@ -117,16 +67,10 @@ function App() {
     }
   }, []);
 
-  // Load family messages from Supabase
   const loadFamilyMessages = useCallback(async () => {
     try {
       const messages = await getMessages();
-      
-      if (messages && messages.length > 0) {
-        setFamilyMessages(messages);
-      } else {
-        setFamilyMessages([]);
-      }
+      setFamilyMessages(messages && messages.length > 0 ? messages : []);
     } catch (error) {
       console.error('Error loading family messages:', error);
       setFamilyMessages([]);
@@ -160,8 +104,10 @@ function App() {
     setStep('carousel');
   };
   
+  // ✅ FIXED: Carousel goes to GIFTBOX (family messages & photos), NOT back to balloon
   const afterCarousel = () => {
     soundManager.playTransition();
+    soundManager.setStage('giftbox');
     setStep('giftbox');
   };
   
@@ -203,11 +149,7 @@ function App() {
 
   return (
     <div className="app">
-      <button 
-        onClick={toggleSound}
-        className="sound-control-btn"
-        aria-label="Toggle Sound"
-      >
+      <button onClick={toggleSound} className="sound-control-btn">
         {isMuted ? '🔇' : '🔊'}
       </button>
       
@@ -229,7 +171,6 @@ function App() {
         )}
       </div>
 
-      {/* Upload Modal */}
       {showUpload && (
         <div className="upload-modal-overlay" onClick={toggleUpload}>
           <div className="upload-modal-content" onClick={(e) => e.stopPropagation()}>
