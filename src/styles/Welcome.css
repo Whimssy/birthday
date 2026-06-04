@@ -1,83 +1,283 @@
+/* Welcome Page - Cartoon Vibe */
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700;800&family=Luckiest+Guy&display=swap');
+
 .welcome-card {
-  background: rgba(255, 248, 235, 0.96);
-  border-radius: 60px;
-  padding: 2rem;
-  max-width: 600px;
+  background: rgba(26, 26, 46, 0.85);
+  backdrop-filter: blur(15px);
+  border-radius: 80px;
+  padding: 2.5rem;
+  max-width: 650px;
   width: 100%;
   text-align: center;
-  box-shadow: 0 30px 50px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(5px);
-  border: 3px solid #ffd700;
-  animation: fadeIn 0.8s ease-out;
+  box-shadow: 0 30px 50px rgba(0, 0, 0, 0.4);
+  border: 4px solid #FFD700;
+  animation: welcomePop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  font-family: 'Comic Neue', 'Luckiest Guy', cursive;
 }
 
-@keyframes fadeIn {
-  from {
+@keyframes welcomePop {
+  0% {
     opacity: 0;
-    transform: scale(0.9);
+    transform: scale(0.7) rotate(-5deg);
   }
-  to {
+  50% {
+    transform: scale(1.05) rotate(2deg);
+  }
+  100% {
     opacity: 1;
-    transform: scale(1);
+    transform: scale(1) rotate(0deg);
   }
 }
 
 .welcome-emoji {
   font-size: 5rem;
   margin-bottom: 1rem;
+  animation: emojiWave 1s ease-in-out infinite;
+}
+
+@keyframes emojiWave {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(15deg); }
+  75% { transform: rotate(-15deg); }
 }
 
 .welcome-title {
-  font-family: 'Georgia', serif;
-  font-size: 2.5rem;
-  color: #c85b1e;
+  font-family: 'Luckiest Guy', cursive;
+  font-size: 3rem;
+  background: linear-gradient(135deg, #FFD700, #FF69B4, #4ECDC4);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
   margin-bottom: 0.5rem;
+  letter-spacing: 2px;
+  text-shadow: none;
 }
 
 .welcome-subtitle {
-  color: #2c6e6e;
+  font-family: 'Comic Neue', cursive;
+  color: #FFEAA7;
   margin-bottom: 1rem;
   font-size: 1.3rem;
+  font-weight: bold;
 }
 
 .welcome-text {
   font-size: 1.1rem;
   margin: 20px 0;
-  color: #b47c44;
+  color: #FFD700;
   font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 }
 
 .welcome-description {
   margin: 20px 0;
-  color: #4a5568;
+  color: #FFEAA7;
   line-height: 1.6;
+  font-size: 1rem;
 }
 
 .welcome-button {
-  background: linear-gradient(135deg, #ff9f4a, #ff6b35);
+  background: linear-gradient(135deg, #FFD700, #FF69B4);
   border: none;
-  padding: 14px 35px;
-  font-size: 1.2rem;
+  padding: 16px 40px;
+  font-size: 1.3rem;
   font-weight: bold;
-  border-radius: 50px;
+  border-radius: 60px;
   color: white;
   cursor: pointer;
   margin: 20px 0;
-  transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  font-family: 'Luckiest Guy', cursive;
+  letter-spacing: 2px;
+  animation: buttonPulse 2s ease-in-out infinite;
+}
+
+@keyframes buttonPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 12px 30px rgba(255, 215, 0, 0.5);
+  }
 }
 
 .welcome-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  transform: scale(1.08);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
 }
 
 .welcome-quote {
   font-style: italic;
-  color: #b47c44;
+  color: #FFEAA7;
   font-size: 0.95rem;
   margin-top: 20px;
-  padding: 10px;
-  background: #fff0dc;
-  border-radius: 30px;
+  padding: 12px;
+  background: rgba(255, 105, 180, 0.2);
+  border-radius: 50px;
+  font-family: 'Comic Neue', cursive;
+  border: 1px dashed #FFD700;
+}
+
+/* ==================== */
+/* FAMILY UPLOAD SECTION - Integrated Button */
+/* ==================== */
+.family-upload-section {
+  margin-top: 25px;
+  padding-top: 15px;
+  border-top: 2px dashed rgba(255, 215, 0, 0.3);
+}
+
+.family-upload-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.divider-line {
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #FFD700, transparent);
+}
+
+.divider-emoji {
+  font-size: 1.2rem;
+  animation: heartBeat 1s ease-in-out infinite;
+}
+
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+.family-upload-btn {
+  width: 100%;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 105, 180, 0.15));
+  border: 2px solid #FFD700;
+  border-radius: 60px;
+  padding: 15px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  animation: uploadBtnGlow 2s ease-in-out infinite;
+}
+
+@keyframes uploadBtnGlow {
+  0%, 100% {
+    border-color: #FFD700;
+    box-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+  }
+  50% {
+    border-color: #FF69B4;
+    box-shadow: 0 0 15px rgba(255, 105, 180, 0.5);
+  }
+}
+
+.family-upload-btn:hover {
+  transform: scale(1.02);
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.25), rgba(255, 105, 180, 0.25));
+}
+
+.upload-btn-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.upload-icon-large {
+  font-size: 2.5rem;
+  animation: cameraShake 1s ease-in-out infinite;
+}
+
+@keyframes cameraShake {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(5deg); }
+  75% { transform: rotate(-5deg); }
+}
+
+.upload-text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.upload-title {
+  font-family: 'Luckiest Guy', cursive;
+  font-size: 1.2rem;
+  color: #FFD700;
+  letter-spacing: 1px;
+}
+
+.upload-description {
+  font-family: 'Comic Neue', cursive;
+  font-size: 0.75rem;
+  color: #FFEAA7;
+}
+
+.upload-arrow {
+  font-size: 1.5rem;
+  animation: arrowBounce 1s ease-in-out infinite;
+}
+
+@keyframes arrowBounce {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(5px); }
+}
+
+.family-upload-hint {
+  margin-top: 12px;
+  font-size: 0.7rem;
+  color: #FFB6C1;
+  font-family: 'Comic Neue', cursive;
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .welcome-card {
+    padding: 1.5rem;
+    margin: 20px;
+  }
+  
+  .welcome-title {
+    font-size: 2rem;
+  }
+  
+  .welcome-subtitle {
+    font-size: 1rem;
+  }
+  
+  .welcome-button {
+    padding: 12px 30px;
+    font-size: 1rem;
+  }
+  
+  .upload-icon-large {
+    font-size: 1.8rem;
+  }
+  
+  .upload-title {
+    font-size: 0.9rem;
+  }
+  
+  .upload-description {
+    font-size: 0.65rem;
+  }
+  
+  .upload-arrow {
+    font-size: 1rem;
+  }
+  
+  .family-upload-btn {
+    padding: 12px 15px;
+  }
+  
+  .upload-btn-content {
+    gap: 10px;
+  }
 }

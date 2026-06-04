@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/BirthdayCard.css';
 import soundEffects from '../utils/soundManager';
+
 const BirthdayCard = ({ onReset }) => {
   const [showMessage, setShowMessage] = useState(false);
   
@@ -57,7 +58,7 @@ const BirthdayCard = ({ onReset }) => {
       
       <div className="card-buttons">
         <button className="reset-button" onClick={handleReset}>
-          🔁 Relive Adventure
+          🔁 See Family Messages 🔁
         </button>
       </div>
       

@@ -2,14 +2,18 @@ import React from 'react';
 import '../styles/Welcome.css';
 import soundManager from '../utils/soundManager';
 
-const Welcome = ({ onStart }) => {
+const Welcome = ({ onStart, onUpload }) => {
   const handleStart = () => {
-    // Ensure audio context is initialized and resumed
     soundManager.init();
     soundManager.resume();
     soundManager.playClick();
     soundManager.setStage('game');
     onStart();
+  };
+
+  const handleUploadClick = () => {
+    soundManager.playClick();
+    if (onUpload) onUpload();
   };
 
   return (
@@ -26,6 +30,26 @@ const Welcome = ({ onStart }) => {
       </button>
       <div className="welcome-quote">
         ✨ You deserve the best time of your life ✨
+      </div>
+      
+      {/* UPLOAD SECTION - Family Photo Upload Button */}
+      <div className="family-upload-section">
+        <div className="family-upload-divider">
+          <span className="divider-line"></span>
+          <span className="divider-emoji">💝</span>
+          <span className="divider-line"></span>
+        </div>
+        <button className="family-upload-btn" onClick={handleUploadClick}>
+          <div className="upload-btn-content">
+            <span className="upload-icon-large">📸</span>
+            <div className="upload-text">
+              <span className="upload-title">FAMILY PHOTO UPLOAD</span>
+              <span className="upload-description">Click here to add your special memories of our birthday queen!</span>
+            </div>
+            <span className="upload-arrow">👉</span>
+          </div>
+        </button>
+        <p className="family-upload-hint">Everyone in the family can add photos & videos - they'll appear as a surprise gift! 🎁</p>
       </div>
     </div>
   );

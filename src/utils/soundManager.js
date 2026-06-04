@@ -5,6 +5,7 @@ class SoundManager {
     this.audioContext = null;
     this.isInitialized = false;
     this.musicInterval = null;
+    this.currentMelodyIndex = 0;
   }
 
   init() {
@@ -13,7 +14,7 @@ class SoundManager {
       this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
       this.isInitialized = true;
     } catch(e) {
-      // Silent fail - audio not supported
+      console.warn('Audio not supported');
     }
   }
 
@@ -69,8 +70,14 @@ class SoundManager {
   playSuccess() {
     if (this.isMuted) return;
     this.resume();
-    this.playTone(523.25, 0.2, 0.5);
-    setTimeout(() => this.playTone(659.25, 0.2, 0.5), 100);
+    this.playMelodicSuccess();
+  }
+
+  playMelodicSuccess() {
+    const notes = [523.25, 659.25, 783.99, 1046.50];
+    notes.forEach((note, i) => {
+      setTimeout(() => this.playTone(note, 0.15, 0.3), i * 100);
+    });
   }
 
   playBalloonPop() {
@@ -82,7 +89,10 @@ class SoundManager {
   playReveal() {
     if (this.isMuted) return;
     this.resume();
-    this.playTone(440, 0.2, 0.8);
+    const notes = [440, 523.25, 659.25, 783.99];
+    notes.forEach((note, i) => {
+      setTimeout(() => this.playTone(note, 0.2, 0.4), i * 80);
+    });
   }
 
   playGiftOpen() {
@@ -123,6 +133,12 @@ class SoundManager {
     }
   }
 
+  playMelody(melody, tempo = 400) {
+    melody.forEach((note, i) => {
+      setTimeout(() => this.playTone(note, 0.08, 0.6), i * tempo);
+    });
+  }
+
   playMusic(stage) {
     if (this.isMuted) return;
     this.resume();
@@ -131,25 +147,54 @@ class SoundManager {
       clearInterval(this.musicInterval);
     }
     
-    const notes = {
-      welcome: [261.63, 293.66, 329.63, 349.23],
-      game: [329.63, 349.23, 392.00, 440.00],
-      story: [261.63, 329.63, 392.00, 523.25],
-      balloon: [349.23, 440.00, 523.25, 587.33],
-      carousel: [293.66, 349.23, 440.00, 523.25],
-      giftbox: [261.63, 392.00, 523.25, 659.25],
-      card: [329.63, 415.30, 523.25, 659.25]
+    // Richer melodies for each stage
+    const melodies = {
+      welcome: [
+        [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25],
+        [523.25, 493.88, 440.00, 392.00, 349.23, 329.63, 293.66, 261.63]
+      ],
+      game: [
+        [329.63, 349.23, 392.00, 440.00, 392.00, 349.23, 329.63, 293.66],
+        [440.00, 493.88, 523.25, 587.33, 523.25, 493.88, 440.00, 392.00]
+      ],
+      story: [
+        [261.63, 329.63, 392.00, 523.25, 392.00, 329.63, 261.63, 196.00],
+        [523.25, 659.25, 783.99, 523.25, 392.00, 329.63, 261.63, 196.00]
+      ],
+      balloon: [
+        [349.23, 440.00, 523.25, 587.33, 698.46, 587.33, 523.25, 440.00],
+        [587.33, 659.25, 783.99, 880.00, 783.99, 659.25, 587.33, 523.25]
+      ],
+      carousel: [
+        [293.66, 349.23, 440.00, 523.25, 659.25, 523.25, 440.00, 349.23],
+        [440.00, 523.25, 659.25, 783.99, 880.00, 783.99, 659.25, 523.25]
+      ],
+      giftbox: [
+        [261.63, 392.00, 523.25, 659.25, 783.99, 659.25, 523.25, 392.00],
+        [392.00, 523.25, 659.25, 783.99, 987.77, 783.99, 659.25, 523.25]
+      ],
+      card: [
+        [329.63, 415.30, 523.25, 659.25, 783.99, 880.00, 987.77, 1046.50],
+        [783.99, 659.25, 523.25, 415.30, 329.63, 261.63, 196.00, 174.61]
+      ]
     };
     
-    const melody = notes[stage] || notes.welcome;
+    const stageMelodies = melodies[stage] || melodies.welcome;
+    let melodyIndex = 0;
     let noteIndex = 0;
     
     this.musicInterval = setInterval(() => {
-      if (!this.isMuted) {
-        this.playTone(melody[noteIndex % melody.length], 0.06, 0.8);
+      if (!this.isMuted && this.currentStage === stage) {
+        const currentMelody = stageMelodies[melodyIndex % stageMelodies.length];
+        this.playTone(currentMelody[noteIndex % currentMelody.length], 0.06, 0.9);
         noteIndex++;
+        
+        // Switch melody every 16 notes
+        if (noteIndex % 16 === 0) {
+          melodyIndex++;
+        }
       }
-    }, 2000);
+    }, 600);
   }
 
   stopMusic() {
@@ -163,7 +208,7 @@ class SoundManager {
     this.currentStage = stage;
     this.stopMusic();
     if (!this.isMuted) {
-      this.playMusic(stage);
+      setTimeout(() => this.playMusic(stage), 100);
     }
   }
 

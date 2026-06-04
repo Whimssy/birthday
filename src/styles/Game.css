@@ -1,16 +1,21 @@
+/* Game Page - Cartoon Vibe */
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700;800&family=Luckiest+Guy&display=swap');
+
 .game-card {
-  background: rgba(255, 248, 235, 0.96);
-  border-radius: 60px;
+  background: rgba(26, 26, 46, 0.85);
+  backdrop-filter: blur(15px);
+  border-radius: 80px;
   padding: 2rem;
-  max-width: 600px;
+  max-width: 700px;
   width: 100%;
   text-align: center;
-  box-shadow: 0 30px 50px rgba(0, 0, 0, 0.3);
-  border: 3px solid #ffd700;
-  animation: slideUp 0.5s ease-out;
+  box-shadow: 0 30px 50px rgba(0, 0, 0, 0.4);
+  border: 4px solid #FFD700;
+  animation: slideUpCartoon 0.5s ease-out;
+  font-family: 'Comic Neue', 'Luckiest Guy', cursive;
 }
 
-@keyframes slideUp {
+@keyframes slideUpCartoon {
   from {
     opacity: 0;
     transform: translateY(50px);
@@ -26,87 +31,131 @@
 }
 
 .game-icon {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #c85b1e;
+  font-size: 2rem;
+  font-family: 'Luckiest Guy', cursive;
+  color: #FFD700;
   margin-bottom: 15px;
+  text-shadow: 2px 2px 0px #FF69B4;
+  letter-spacing: 2px;
 }
 
 .game-stats {
   display: flex;
   justify-content: space-between;
+  gap: 15px;
   font-size: 1.5rem;
   font-weight: bold;
-  color: #2c6e6e;
   padding: 0 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.stat-box {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  border-radius: 60px;
+  padding: 10px 20px;
+  text-align: center;
+  border: 2px solid rgba(255, 215, 0, 0.5);
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  color: #FFEAA7;
+  letter-spacing: 1px;
+  display: block;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #FFD700;
+  font-family: 'Luckiest Guy', cursive;
+  line-height: 1;
 }
 
 .game-area {
-  background: linear-gradient(135deg, #0b5e6e, #0a4a5a);
-  border-radius: 50px;
-  min-height: 400px;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(5px);
+  border-radius: 60px;
+  min-height: 450px;
   position: relative;
   margin: 20px 0;
   overflow: hidden;
-  border: 4px solid #ffc857;
+  border: 3px solid #FFD700;
   cursor: pointer;
   box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.3);
 }
 
 .pearl {
   position: absolute;
-  width: 70px;
-  height: 70px;
-  background: radial-gradient(circle, #fff4b0, #ffd966);
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, #FFD700, #FFA500);
   border: none;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.5rem;
+  font-size: 3rem;
   cursor: pointer;
   transition: all 0.05s linear;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-  animation: wiggle 0.5s infinite ease;
+  animation: pearlWiggle 0.5s infinite ease;
+}
+
+@keyframes pearlWiggle {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(5px, -3px) rotate(5deg); }
+  75% { transform: translate(-3px, 5px) rotate(-4deg); }
 }
 
 .pearl:hover {
-  transform: scale(1.1);
+  transform: scale(1.15);
 }
 
-@keyframes wiggle {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  25% { transform: translate(8px, -5px) rotate(5deg); }
-  75% { transform: translate(-5px, 8px) rotate(-4deg); }
+.pearl:active {
+  transform: scale(0.95);
+}
+
+.pearl-emoji {
+  font-size: 2.5rem;
 }
 
 .game-instruction {
   margin-top: 20px;
-  color: #1e5555;
+  color: #FFEAA7;
   font-weight: bold;
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
+.game-tip {
+  font-size: 0.8rem;
+  margin-top: 10px;
+  color: #FFB6C1;
+}
+
+/* Result Cards */
 .game-result-card {
-  background: rgba(255, 248, 235, 0.96);
-  border-radius: 60px;
+  background: rgba(26, 26, 46, 0.9);
+  backdrop-filter: blur(15px);
+  border-radius: 80px;
   padding: 2rem;
-  max-width: 500px;
+  max-width: 550px;
   width: 100%;
   text-align: center;
-  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.3);
-  animation: pulse 0.6s ease-out;
+  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.4);
+  animation: pulseResult 0.6s ease-out;
+  border: 4px solid #FFD700;
 }
 
-.game-result-card.victory {
-  border: 3px solid #ffd700;
-  background: linear-gradient(135deg, #fff8f0, #fff0dc);
-}
-
-@keyframes pulse {
+@keyframes pulseResult {
   0% {
     transform: scale(0.9);
     opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
   }
   100% {
     transform: scale(1);
@@ -114,100 +163,148 @@
   }
 }
 
+.game-result-card.victory {
+  border: 4px solid #FFD700;
+  background: linear-gradient(135deg, rgba(43, 90, 58, 0.9), rgba(26, 74, 42, 0.9));
+}
+
 .result-emoji {
   font-size: 4rem;
   margin-bottom: 1rem;
+  animation: emojiSpin 0.5s ease;
+}
+
+@keyframes emojiSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .result-title {
-  font-family: 'Georgia', serif;
+  font-family: 'Luckiest Guy', cursive;
   font-size: 2rem;
-  color: #c85b1e;
+  color: #FFD700;
   margin-bottom: 1rem;
+  text-shadow: 2px 2px 0px #FF69B4;
 }
 
 .result-text {
-  font-size: 1.1rem;
+  font-size: 1rem;
   margin: 1rem 0;
-  color: #4a5568;
+  color: #FFEAA7;
 }
 
 .result-quote {
   font-style: italic;
-  color: #b47c44;
+  color: #FFD700;
   margin-top: 1rem;
 }
 
+.result-bonus {
+  font-size: 0.9rem;
+  color: #FFD700;
+  margin: 5px 0;
+}
+
+.result-next {
+  margin-top: 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #FFD700;
+  background: rgba(255, 215, 0, 0.2);
+  display: inline-block;
+  padding: 5px 15px;
+  border-radius: 30px;
+}
+
 .game-button {
-  background: linear-gradient(135deg, #ff9f4a, #ff6b35);
+  background: linear-gradient(135deg, #FFD700, #FF69B4);
   border: none;
-  padding: 12px 30px;
+  padding: 14px 35px;
   font-size: 1.1rem;
   font-weight: bold;
-  border-radius: 50px;
+  border-radius: 60px;
   color: white;
   cursor: pointer;
   margin-top: 20px;
-  transition: transform 0.2s;
+  transition: all 0.3s ease;
+  font-family: 'Luckiest Guy', cursive;
+  letter-spacing: 1px;
 }
 
 .game-button:hover {
   transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
-/* Add to existing Game.css */
-
-.touch-game-area {
-  min-height: 450px;
-  touch-action: manipulation;
-}
-
-.touch-pearl {
-  width: 90px;
-  height: 90px;
-  font-size: 3rem;
-}
-
-@media (max-width: 768px) {
-  .touch-pearl {
-    width: 70px;
-    height: 70px;
-    font-size: 2.5rem;
-  }
-  
-  .touch-game-area {
-    min-height: 350px;
-  }
-  
-  .touch-button {
-    padding: 15px 35px;
-    font-size: 1.1rem;
-  }
-  
-  .stat-box {
-    padding: 5px 12px;
-  }
-  
-  .stat-value {
-    font-size: 1.3rem;
-  }
-}
-
+/* Combo Box */
 .combo-box {
-  background: linear-gradient(135deg, #FFD700, #FF6B6B);
+  background: linear-gradient(135deg, #FFD700, #FF69B4);
   padding: 5px 12px;
-  border-radius: 20px;
-  animation: comboPulse 0.3s ease;
+  border-radius: 30px;
+  animation: comboPulse 0.3s ease infinite;
 }
 
 .combo-label {
   color: white;
   font-weight: bold;
   font-size: 0.9rem;
+  font-family: 'Luckiest Guy', cursive;
 }
 
-@keyframes comboPulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
+.best-combo-box {
+  background: linear-gradient(135deg, #FFD700, #FF8C00);
+  padding: 5px 12px;
+  border-radius: 30px;
+  animation: medalGlow 1s infinite;
+}
+
+@keyframes medalGlow {
+  0%, 100% { box-shadow: 0 0 5px #FFD700; }
+  50% { box-shadow: 0 0 15px #FFD700; }
+}
+
+.progress-bar {
+  width: 100%;
+  height: 12px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 15px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #FFD700, #FF69B4);
+  border-radius: 20px;
+  transition: width 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .game-card {
+    padding: 1rem;
+    margin: 20px;
+  }
+  
+  .pearl {
+    width: 60px;
+    height: 60px;
+    font-size: 2rem;
+  }
+  
+  .stat-value {
+    font-size: 1.3rem;
+  }
+  
+  .stat-box {
+    padding: 6px 12px;
+  }
+  
+  .game-area {
+    min-height: 350px;
+  }
+  
+  .result-title {
+    font-size: 1.5rem;
+  }
 }

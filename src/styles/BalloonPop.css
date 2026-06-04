@@ -1,20 +1,28 @@
-.balloon-game {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 60px;
-  padding: 2rem;
-  max-width: 1000px;
-  width: 100%;
-  min-height: 650px;
+/* Ocean Raining Balloons Theme */
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700;800&family=Luckiest+Guy&display=swap');
+
+.ocean-rain-container {
   position: relative;
+  width: 100%;
+  max-width: 1300px;
+  min-height: 750px;
+  border-radius: 60px;
   overflow: hidden;
-  animation: fadeIn 0.5s ease-out;
+  font-family: 'Comic Neue', 'Luckiest Guy', cursive;
   box-shadow: 0 30px 50px rgba(0, 0, 0, 0.3);
+  animation: fadeInOcean 0.5s ease-out;
+  
+  /* BEAUTIFUL BACKGROUND IMAGE - Fully visible and centered */
+  background-image: url('https://i.pinimg.com/736x/c9/12/cf/c912cf938da3902749157207c132a7a1.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 
-@keyframes fadeIn {
+@keyframes fadeInOcean {
   from {
     opacity: 0;
-    transform: scale(0.95);
+    transform: scale(0.98);
   }
   to {
     opacity: 1;
@@ -22,304 +30,568 @@
   }
 }
 
-.balloon-header {
-  text-align: center;
-  margin-bottom: 30px;
-  color: white;
+/* Remove old sky/waves - using image background */
+.ocean-sky, .ocean-waves, .sun, .clouds, .wave {
+  display: none;
+}
+
+/* Header - Semi-transparent to show background */
+.ocean-header {
   position: relative;
-  z-index: 2;
+  z-index: 15;
+  text-align: center;
+  padding: 20px 20px 10px;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+  border-radius: 60px 60px 0 0;
 }
 
-.balloon-header h2 {
+.ocean-title {
   font-size: 2rem;
-  margin-bottom: 20px;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-  letter-spacing: 2px;
+  font-family: 'Luckiest Guy', cursive;
+  color: #FFD700;
+  text-shadow: 3px 3px 0px #FF69B4, 2px 2px 10px rgba(0, 0, 0, 0.5);
+  margin-bottom: 8px;
 }
 
-.balloon-counter {
-  background: rgba(255,255,255,0.2);
-  backdrop-filter: blur(10px);
-  border-radius: 30px;
-  padding: 20px;
-  margin: 15px 0;
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
+.ocean-title span {
+  margin: 0 10px;
+  display: inline-block;
+  animation: titleWave 2s ease infinite;
 }
 
-.counter-stats {
+@keyframes titleWave {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.ocean-subtitle {
+  font-family: 'Comic Neue', cursive;
+  color: #FFEAA7;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Stats - Semi-transparent */
+.ocean-stats {
   display: flex;
-  align-items: center;
   justify-content: center;
-  gap: 15px;
-  margin-bottom: 10px;
+  gap: 12px;
+  margin-bottom: 15px;
   flex-wrap: wrap;
 }
 
-.counter-number {
-  font-size: 3.5rem;
+.ocean-stat {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  border-radius: 60px;
+  padding: 8px 16px;
+  text-align: center;
+  min-width: 80px;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.ocean-stat .stat-icon {
+  font-size: 1.2rem;
+}
+
+.ocean-stat .stat-number {
+  font-size: 1.6rem;
   font-weight: bold;
   color: #FFD700;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  display: block;
+  font-family: 'Luckiest Guy', cursive;
+  line-height: 1;
 }
 
-.counter-total {
-  font-size: 1.8rem;
-  color: white;
-  font-weight: bold;
+.ocean-stat .stat-label {
+  font-size: 0.6rem;
+  color: #FFEAA7;
 }
 
-.combo-badge {
-  background: linear-gradient(135deg, #FF6B6B, #FF8C42);
-  padding: 5px 15px;
-  border-radius: 30px;
-  animation: pulse 0.5s ease;
+.goal-ocean .stat-number {
+  color: #FFFFFF;
+  text-shadow: 0 0 5px #FF69B4;
 }
 
-.combo-text {
-  font-weight: bold;
-  color: white;
-  font-size: 1rem;
+.combo-ocean .stat-number {
+  color: #FFA07A;
+  animation: comboOceanPulse 0.5s ease infinite;
 }
 
-.powerup-badge {
-  background: linear-gradient(135deg, #FFD700, #FFA500);
-  padding: 5px 15px;
-  border-radius: 30px;
-  animation: glow 1s infinite;
+@keyframes comboOceanPulse {
+  0%, 100% { text-shadow: 0 0 3px #FFA07A; transform: scale(1); }
+  50% { text-shadow: 0 0 12px #FFA07A; transform: scale(1.05); }
 }
 
-.powerup-text {
-  font-weight: bold;
-  color: #333;
-  font-size: 0.9rem;
+/* Progress Bar */
+.ocean-progress {
+  max-width: 400px;
+  margin: 0 auto;
 }
 
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-}
-
-@keyframes glow {
-  0%, 100% { box-shadow: 0 0 5px #FFD700; }
-  50% { box-shadow: 0 0 20px #FFD700; }
-}
-
-.counter-bar {
+.progress-bar-ocean {
   width: 100%;
-  height: 30px;
-  background: rgba(255,255,255,0.3);
-  border-radius: 15px;
+  height: 14px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 20px;
   overflow: hidden;
+  margin-bottom: 5px;
 }
 
-.counter-fill {
+.progress-fill-ocean {
   height: 100%;
-  background: linear-gradient(90deg, #FFD700, #FF6B6B);
+  background: linear-gradient(90deg, #FFD700, #FF69B4);
+  border-radius: 20px;
   transition: width 0.3s ease;
-  border-radius: 15px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
+  padding-right: 8px;
 }
 
-.counter-percent {
+.progress-text {
+  font-size: 0.6rem;
   color: white;
   font-weight: bold;
-  font-size: 0.9rem;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 }
 
-.game-instruction-box {
-  margin-top: 15px;
-}
-
-.balloon-instruction {
-  font-size: 1.2rem;
+.progress-message-ocean {
+  font-size: 0.7rem;
+  color: #FFEAA7;
+  text-align: center;
   font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Balloon Counter Info */
+.balloon-counter-info {
+  margin-top: 8px;
+  font-size: 0.7rem;
   color: #FFEAA7;
-}
-
-.game-tips {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 10px;
-  flex-wrap: wrap;
-}
-
-.tip {
-  font-size: 0.8rem;
-  background: rgba(0,0,0,0.3);
+  background: rgba(0, 0, 0, 0.4);
+  display: inline-block;
   padding: 4px 12px;
-  border-radius: 20px;
-  color: #FFEAA7;
+  border-radius: 30px;
+  font-family: 'Comic Neue', cursive;
 }
 
-.balloons-area {
+/* Balloons Arena */
+.ocean-balloons-arena {
   position: relative;
-  min-height: 400px;
+  min-height: 520px;
+  z-index: 10;
+  overflow: visible;
   cursor: pointer;
-  z-index: 2;
 }
 
-.balloon {
+/* Realistic Balloon */
+.ocean-balloon {
   position: absolute;
-  width: 70px;
-  height: 90px;
-  border-radius: 50%;
   cursor: pointer;
+  background: transparent;
   border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.1s ease;
-  animation: float 3s ease-in-out infinite;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  padding: 0;
+  z-index: 20;
+  transition: transform 0.02s linear;
+  will-change: left, top, transform;
+}
+
+.ocean-balloon:hover {
+  transform: scale(1.08) !important;
+  filter: brightness(1.05);
+  z-index: 30;
+}
+
+.ocean-balloon:active {
+  transform: scale(0.96) !important;
+}
+
+.balloon-body {
   position: relative;
-  overflow: hidden;
+  width: 65px;
+  height: 80px;
+  border-radius: 50% 50% 50% 50%;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  transition: all 0.05s linear;
+  animation: balloonFloat 0.3s ease-out;
 }
 
-.balloon.powerup {
-  animation: float 3s ease-in-out infinite, glow 0.5s infinite;
+@keyframes balloonFloat {
+  from { opacity: 0; transform: scale(0.5); }
+  to { opacity: 1; transform: scale(1); }
 }
 
-.balloon:hover {
-  transform: scale(1.15) !important;
-  filter: brightness(1.1);
-}
-
-.balloon:active {
-  transform: scale(0.95) !important;
-}
-
-.balloon-emoji {
-  font-size: 2rem;
-  position: relative;
-  z-index: 2;
-}
-
-.balloon-string {
+.balloon-shine-ocean {
   position: absolute;
-  bottom: -25px;
+  top: 12%;
+  left: 15%;
+  width: 25%;
+  height: 25%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.balloon-highlight {
+  position: absolute;
+  bottom: 15%;
+  right: 15%;
+  width: 15%;
+  height: 15%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0));
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.balloon-string-ocean {
+  position: absolute;
+  bottom: -28px;
+  left: 50%;
   width: 2px;
   height: 30px;
-  background: linear-gradient(180deg, #8B4513, #654321);
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.balloon-shine {
-  position: absolute;
-  top: 10%;
-  left: 15%;
-  width: 20%;
-  height: 20%;
-  background: radial-gradient(circle, rgba(255,255,255,0.8), rgba(255,255,255,0));
-  border-radius: 50%;
+  transform-origin: top center;
+  border-radius: 1px;
   pointer-events: none;
 }
 
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  25% {
-    transform: translateY(-15px) rotate(-3deg);
-  }
-  75% {
-    transform: translateY(-25px) rotate(3deg);
-  }
-}
-
-.pop-effect-bubble {
+/* Perfect Message */
+.perfect-message {
   position: fixed;
-  font-size: 1.3rem;
-  font-weight: bold;
-  animation: popBubble 0.6s ease-out forwards;
-  pointer-events: none;
-  z-index: 100;
-  color: #FFD700;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 300;
+  animation: perfectPop 0.3s ease-out;
 }
 
-@keyframes popBubble {
+@keyframes perfectPop {
   0% {
-    opacity: 1;
-    transform: scale(0.5);
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
   }
   50% {
-    transform: scale(1.5);
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.perfect-content {
+  background: linear-gradient(135deg, #FFD700, #FF8C42);
+  border-radius: 60px;
+  padding: 20px 40px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  border: 3px solid white;
+  font-family: 'Luckiest Guy', cursive;
+}
+
+.perfect-emoji {
+  font-size: 3rem;
+}
+
+.perfect-content h3 {
+  font-size: 1.5rem;
+  margin: 5px 0;
+}
+
+/* Pop Burst Effect */
+.pop-burst-ocean {
+  position: fixed;
+  pointer-events: none;
+  z-index: 200;
+  animation: popBurst 0.4s ease-out forwards;
+}
+
+@keyframes popBurst {
+  0% {
+    opacity: 1;
+    transform: scale(0.3);
   }
   100% {
     opacity: 0;
-    transform: scale(2);
+    transform: scale(1.5);
   }
 }
 
-.floating-particles {
+.burst-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.8;
+  animation: burstExpand 0.3s ease-out forwards;
+}
+
+@keyframes burstExpand {
+  from {
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  to {
+    width: 60px;
+    height: 60px;
+    opacity: 0;
+  }
+}
+
+.burst-particles {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100px;
+  height: 100px;
+  transform: translate(-50%, -50%);
+}
+
+.burst-particle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  animation: particleFly 0.3s ease-out forwards;
+}
+
+@keyframes particleFly {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) translate(var(--x, 30px), var(--y, -30px)) scale(1);
+    opacity: 0;
+  }
+}
+
+.pop-number-ocean {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #FFD700;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
+  animation: numberFloat 0.4s ease-out forwards;
+}
+
+.pop-combo-ocean {
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: #FF69B4;
+  white-space: nowrap;
+  animation: comboFloat 0.4s ease-out forwards;
+}
+
+@keyframes numberFloat {
+  0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-30px); }
+}
+
+@keyframes comboFloat {
+  0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-25px); }
+}
+
+/* Combo Meter */
+.combo-meter-ocean {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 140px;
+  height: 10px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  overflow: hidden;
+  z-index: 50;
+}
+
+.combo-meter-fill-ocean {
+  height: 100%;
+  background: linear-gradient(90deg, #FFD700, #FF69B4);
+  border-radius: 20px;
+  transition: width 0.2s ease;
+}
+
+.combo-meter-text-ocean {
+  position: absolute;
+  top: -18px;
+  right: 0;
+  font-size: 0.65rem;
+  color: #FFD700;
+  font-weight: bold;
+  font-family: 'Comic Neue', cursive;
+}
+
+/* Instruction Panel */
+.instruction-panel {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(10px);
+  border-radius: 25px;
+  padding: 10px 15px;
+  z-index: 25;
+  border: 2px solid #FFD700;
+  max-width: 220px;
+}
+
+.instruction-title {
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #FFD700;
+  text-align: center;
+  margin-bottom: 8px;
+  font-family: 'Luckiest Guy', cursive;
+}
+
+.instruction-items {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.instruction-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.65rem;
+  color: #FFEAA7;
+}
+
+.instr-icon {
+  font-size: 0.9rem;
+  min-width: 25px;
+  text-align: center;
+}
+
+/* Light Rain Particles */
+.light-rain {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  right: 0;
+  bottom: 0;
   pointer-events: none;
-  z-index: 1;
+  z-index: 0;
+  overflow: hidden;
 }
 
-.particle {
+.rain-particle {
   position: absolute;
-  font-size: 1rem;
-  animation: floatParticle linear infinite;
-  opacity: 0.6;
-  color: #FFD700;
+  top: -20px;
+  font-size: 0.7rem;
+  animation: lightRainFall linear infinite;
+  opacity: 0.2;
+  color: #87CEEB;
 }
 
-@keyframes floatParticle {
+@keyframes lightRainFall {
   0% {
-    transform: translateY(100vh) rotate(0deg);
+    transform: translateY(-20px);
     opacity: 0;
   }
   10% {
-    opacity: 0.6;
+    opacity: 0.2;
   }
   90% {
-    opacity: 0.6;
+    opacity: 0.2;
   }
   100% {
-    transform: translateY(-100px) rotate(360deg);
+    transform: translateY(100vh);
     opacity: 0;
   }
 }
 
-/* Photos Reveal Section */
-.photos-reveal {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+/* Ocean Spray Particles */
+.ocean-spray {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.spray {
+  position: absolute;
+  bottom: 0;
+  font-size: 0.6rem;
+  animation: sprayUp 1s ease-out infinite;
+  opacity: 0;
+}
+
+@keyframes sprayUp {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  20% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+}
+
+/* Game Win Screen */
+.game-win-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(15px);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: gameWinFade 0.5s ease;
   border-radius: 60px;
+}
+
+@keyframes gameWinFade {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.game-win-content {
+  text-align: center;
+  max-width: 500px;
   padding: 2rem;
-  max-width: 1200px;
-  width: 100%;
-  animation: slideUp 0.6s ease-out;
-  max-height: 85vh;
-  overflow-y: auto;
+  background: linear-gradient(135deg, #2b5a3a, #1a4a2a);
+  border-radius: 60px;
+  border: 3px solid #FFD700;
+  animation: gameWinSlide 0.5s ease;
 }
 
-.photos-reveal::-webkit-scrollbar {
-  width: 10px;
-}
-
-.photos-reveal::-webkit-scrollbar-track {
-  background: rgba(255,255,255,0.2);
-  border-radius: 10px;
-}
-
-.photos-reveal::-webkit-scrollbar-thumb {
-  background: #FFD700;
-  border-radius: 10px;
-}
-
-@keyframes slideUp {
+@keyframes gameWinSlide {
   from {
     opacity: 0;
     transform: translateY(50px);
@@ -330,70 +602,114 @@
   }
 }
 
-.photos-container {
+.win-emoji {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  animation: winEmojiPop 0.5s ease infinite;
+}
+
+@keyframes winEmojiPop {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.game-win-content h2 {
+  font-size: 2.5rem;
+  font-family: 'Luckiest Guy', cursive;
+  color: #FFD700;
+  margin-bottom: 15px;
+  text-shadow: 2px 2px 0px #FF69B4;
+}
+
+.game-win-content p {
+  font-size: 1rem;
+  color: #FFEAA7;
+  margin-bottom: 20px;
+}
+
+.game-win-stats {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.game-win-stat {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 30px;
+  padding: 10px 15px;
   text-align: center;
 }
 
-.confetti-burst {
-  font-size: 2rem;
-  margin-bottom: 10px;
-  animation: burst 0.5s ease;
+.game-win-stat span {
+  font-size: 0.7rem;
+  color: #FFB6C1;
+  display: block;
 }
 
-.burst-icon {
-  display: inline-block;
-  animation: spin 0.5s ease;
-  margin: 0 5px;
+.game-win-stat strong {
+  font-size: 1.2rem;
+  color: #FFD700;
+  display: block;
+  margin-top: 5px;
+  font-family: 'Luckiest Guy', cursive;
 }
 
-@keyframes burst {
-  0% { transform: scale(0); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.photos-title {
-  color: white;
-  font-size: 2.5rem;
-  margin-bottom: 15px;
-  text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
-  letter-spacing: 2px;
-}
-
-.photos-subtitle {
-  color: #FFEAA7;
-  font-size: 1.1rem;
-  margin-bottom: 30px;
-}
-
-.photos-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 25px;
-  margin: 40px 0;
-}
-
-.photo-card {
-  background: white;
-  border-radius: 20px;
+.win-message {
+  background: rgba(255, 215, 0, 0.15);
+  border-radius: 40px;
   padding: 15px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-  transition: all 0.3s ease;
-  animation: cardReveal 0.6s ease-out backwards;
 }
 
-.photo-card:hover {
-  transform: translateY(-10px) scale(1.02);
+.win-message p {
+  color: #FFEAA7;
+  font-size: 0.9rem;
+  margin: 5px 0;
 }
 
-@keyframes cardReveal {
+/* Game Over Screen */
+.game-over-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(15px);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: gameOverFade 0.5s ease;
+  border-radius: 60px;
+}
+
+@keyframes gameOverFade {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.game-over-content {
+  text-align: center;
+  max-width: 450px;
+  padding: 2rem;
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  border-radius: 60px;
+  border: 3px solid #FF6B6B;
+  animation: gameOverSlide 0.5s ease;
+}
+
+@keyframes gameOverSlide {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
   }
   to {
     opacity: 1;
@@ -401,129 +717,342 @@
   }
 }
 
-.photo-frame {
-  position: relative;
-  overflow: hidden;
-  border-radius: 15px;
-  background: linear-gradient(135deg, #FFD700, #FF6B6B);
-  padding: 3px;
+.game-over-emoji {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  animation: gameOverShake 0.5s ease infinite;
 }
 
-.photo-img {
-  width: 100%;
-  height: 280px;
-  object-fit: cover;
-  border-radius: 12px;
-  transition: transform 0.3s ease;
+@keyframes gameOverShake {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(10deg); }
+  75% { transform: rotate(-10deg); }
 }
 
-.photo-card:hover .photo-img {
+.game-over-content h2 {
+  font-size: 2.5rem;
+  font-family: 'Luckiest Guy', cursive;
+  color: #FF6B6B;
+  margin-bottom: 15px;
+}
+
+.game-over-content p {
+  font-size: 1rem;
+  color: #FFEAA7;
+  margin-bottom: 20px;
+}
+
+.game-over-stats {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.game-over-stat {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 30px;
+  padding: 10px 15px;
+  text-align: center;
+}
+
+.game-over-stat span {
+  font-size: 0.7rem;
+  color: #FFB6C1;
+  display: block;
+}
+
+.game-over-stat strong {
+  font-size: 1.2rem;
+  color: #FFD700;
+  display: block;
+  margin-top: 5px;
+  font-family: 'Luckiest Guy', cursive;
+}
+
+.game-over-hint {
+  font-size: 0.8rem;
+  color: #FFB6C1;
+  margin-top: 10px;
+}
+
+/* Retry Button */
+.retry-button {
+  background: linear-gradient(135deg, #FF6B6B, #FF8C42);
+  border: none;
+  padding: 15px 35px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 60px;
+  color: white;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 15px;
+  transition: all 0.3s ease;
+  margin-bottom: 15px;
+  font-family: 'Luckiest Guy', cursive;
+  letter-spacing: 1px;
+}
+
+.retry-button:hover {
   transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
 }
 
-.photo-overlay {
+.retry-icon {
+  font-size: 1.3rem;
+  animation: retrySpin 0.5s ease;
+}
+
+.retry-button:hover .retry-icon {
+  animation: retrySpin 0.5s ease infinite;
+}
+
+@keyframes retrySpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Header Retry Button */
+.header-retry-btn {
+  background: rgba(255, 107, 107, 0.8);
+  border: 2px solid #FFD700;
+  padding: 6px 15px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  border-radius: 50px;
+  color: white;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+  font-family: 'Comic Neue', cursive;
+}
+
+.header-retry-btn:hover {
+  background: #FF6B6B;
+  transform: scale(1.02);
+  border-color: white;
+}
+
+.header-retry-btn span {
+  font-size: 0.9rem;
+}
+
+/* Final Celebration */
+.ocean-final-celebration {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(15px);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: finalOceanFade 0.5s ease;
+}
+
+@keyframes finalOceanFade {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.ocean-final-content {
+  text-align: center;
+  max-width: 550px;
+  padding: 2rem;
+}
+
+.final-fireworks {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0,0,0,0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
-.photo-card:hover .photo-overlay {
-  opacity: 1;
-}
-
-.photo-emoji {
-  font-size: 3rem;
-}
-
-.photo-caption {
-  color: #333;
-  font-size: 1rem;
-  font-weight: bold;
-  margin-top: 15px;
-}
-
-.continue-button {
-  background: linear-gradient(135deg, #FFD700, #FF6B6B);
-  border: none;
-  padding: 15px 45px;
+.firework {
+  position: absolute;
+  bottom: -50px;
   font-size: 1.2rem;
-  font-weight: bold;
-  border-radius: 50px;
+  animation: fireworkRise 1.5s ease-out forwards;
+}
+
+@keyframes fireworkRise {
+  0% {
+    transform: translateY(0) scale(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-50vh) scale(1);
+  }
+  100% {
+    transform: translateY(-100vh) scale(1.5);
+    opacity: 0;
+  }
+}
+
+.final-trophy {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  animation: trophyWobble 0.5s ease infinite;
+}
+
+@keyframes trophyWobble {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(10deg); }
+  75% { transform: rotate(-10deg); }
+}
+
+.ocean-final-content h2 {
+  font-size: 2rem;
+  font-family: 'Luckiest Guy', cursive;
+  background: linear-gradient(135deg, #FFD700, #FF69B4);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 15px;
+}
+
+.ocean-final-content p {
+  font-size: 1rem;
   color: white;
-  cursor: pointer;
-  margin-top: 30px;
-  transition: all 0.3s ease;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-  letter-spacing: 1px;
+  margin-bottom: 20px;
 }
 
-.continue-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+.final-stats-ocean {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
 }
 
-/* Touch-friendly mobile styles */
+.final-stat-ocean {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 30px;
+  padding: 10px 15px;
+  text-align: center;
+}
+
+.final-stat-ocean span {
+  font-size: 0.7rem;
+  color: #FFEAA7;
+  display: block;
+}
+
+.final-stat-ocean strong {
+  font-size: 1.2rem;
+  color: #FFD700;
+  display: block;
+  margin-top: 5px;
+  font-family: 'Luckiest Guy', cursive;
+}
+
+.unlock-ocean {
+  background: rgba(255, 105, 180, 0.15);
+  border-radius: 40px;
+  padding: 15px;
+}
+
+.unlock-ocean p {
+  color: #FFEAA7;
+  font-size: 0.9rem;
+  margin: 5px 0;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
-  .balloon-game {
-    padding: 1rem;
+  .ocean-rain-container {
+    border-radius: 30px;
+    background-attachment: scroll;
   }
   
-  .balloon-header h2 {
-    font-size: 1.3rem;
+  .ocean-title {
+    font-size: 1.2rem;
   }
   
-  .balloon {
-    width: 60px;
-    height: 75px;
+  .balloon-body {
+    width: 50px;
+    height: 62px;
   }
   
-  .balloon-emoji {
-    font-size: 1.6rem;
+  .ocean-stat {
+    padding: 5px 10px;
+    min-width: 65px;
   }
   
-  .counter-number {
-    font-size: 2.5rem;
+  .ocean-stat .stat-number {
+    font-size: 1.2rem;
   }
   
-  .counter-total {
-    font-size: 1.3rem;
-  }
-  
-  .game-tips {
+  .instruction-panel {
     display: none;
   }
   
-  .balloon-instruction {
+  .ocean-final-content h2 {
+    font-size: 1.3rem;
+  }
+  
+  .game-win-content {
+    padding: 1.5rem;
+    margin: 20px;
+  }
+  
+  .game-win-content h2 {
+    font-size: 1.8rem;
+  }
+  
+  .game-win-stats {
+    gap: 10px;
+  }
+  
+  .game-win-stat {
+    padding: 8px 12px;
+  }
+  
+  .game-over-content {
+    padding: 1.5rem;
+    margin: 20px;
+  }
+  
+  .game-over-content h2 {
+    font-size: 1.8rem;
+  }
+  
+  .retry-button {
+    padding: 12px 25px;
     font-size: 1rem;
   }
   
-  .photos-grid {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 15px;
+  .game-over-stats {
+    gap: 10px;
   }
   
-  .photo-img {
-    height: 200px;
+  .game-over-stat {
+    padding: 8px 12px;
   }
   
-  .photos-title {
-    font-size: 1.5rem;
-  }
-  
-  .continue-button {
-    padding: 12px 30px;
-    font-size: 1rem;
-  }
-  
-  .tip {
+  .header-retry-btn {
+    padding: 4px 12px;
     font-size: 0.7rem;
+  }
+  
+  .ocean-header {
+    background: rgba(0, 0, 0, 0.45);
   }
 }

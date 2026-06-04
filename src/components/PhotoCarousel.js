@@ -6,6 +6,7 @@ const PhotoCarousel = ({ photos, onComplete }) => {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [direction, setDirection] = useState('next');
   const [videoPlaying, setVideoPlaying] = useState(false);
+  const [imageErrors, setImageErrors] = useState({});
 
   const nextSlide = useCallback(() => {
     if (!photos || photos.length === 0) return;
@@ -25,7 +26,6 @@ const PhotoCarousel = ({ photos, onComplete }) => {
     setCurrentIndex(index);
   };
 
-  // Pause auto-play when video is playing
   useEffect(() => {
     if (videoPlaying) {
       setIsAutoPlaying(false);
@@ -37,7 +37,7 @@ const PhotoCarousel = ({ photos, onComplete }) => {
     if (isAutoPlaying && photos && photos.length > 0 && !videoPlaying) {
       interval = setInterval(() => {
         nextSlide();
-      }, 5000); // Increased to 5 seconds for better video viewing
+      }, 5000);
     }
     return () => clearInterval(interval);
   }, [isAutoPlaying, nextSlide, photos, videoPlaying]);
@@ -53,7 +53,6 @@ const PhotoCarousel = ({ photos, onComplete }) => {
   }
 
   const currentPhoto = photos[currentIndex];
-  // Check if current item is a video (by isVideo flag or file extension)
   const isVideo = currentPhoto.isVideo || 
                   (currentPhoto.url && 
                    (currentPhoto.url.endsWith('.mp4') || 
@@ -61,17 +60,27 @@ const PhotoCarousel = ({ photos, onComplete }) => {
                     currentPhoto.url.endsWith('.webm') ||
                     currentPhoto.url.endsWith('.avi')));
 
+  const handleImageError = () => {
+    setImageErrors(prev => ({ ...prev, [currentIndex]: true }));
+  };
+
   const handleVideoPlay = () => {
     setVideoPlaying(true);
   };
 
   const handleVideoPause = () => {
     setVideoPlaying(false);
-    // Resume auto-play after video ends
     setTimeout(() => {
       if (!videoPlaying) {
         setIsAutoPlaying(true);
       }
+    }, 1000);
+  };
+
+  const handleVideoEnded = () => {
+    setVideoPlaying(false);
+    setTimeout(() => {
+      setIsAutoPlaying(true);
     }, 1000);
   };
 
@@ -98,7 +107,7 @@ const PhotoCarousel = ({ photos, onComplete }) => {
                     className="carousel-video"
                     onPlay={handleVideoPlay}
                     onPause={handleVideoPause}
-                    onEnded={handleVideoPause}
+                    onEnded={handleVideoEnded}
                     style={{
                       width: '100%',
                       height: '100%',
@@ -115,14 +124,21 @@ const PhotoCarousel = ({ photos, onComplete }) => {
                   </div>
                 </div>
               ) : (
-                <img 
-                  src={currentPhoto.url} 
-                  alt={currentPhoto.caption}
-                  className="carousel-photo"
-                  onError={(e) => {
-                    e.target.src = "https://via.placeholder.com/500x500/FFD700/FFFFFF?text=Beautiful+Moment";
-                  }}
-                />
+                <div className="image-container">
+                  {!imageErrors[currentIndex] ? (
+                    <img 
+                      src={currentPhoto.url} 
+                      alt={currentPhoto.caption}
+                      className="carousel-photo"
+                      onError={handleImageError}
+                    />
+                  ) : (
+                    <div className="image-fallback">
+                      <span className="fallback-emoji">🌸</span>
+                      <p>{currentPhoto.caption}</p>
+                    </div>
+                  )}
+                </div>
               )}
               <div className="photo-glow"></div>
             </div>
@@ -179,7 +195,10 @@ const PhotoCarousel = ({ photos, onComplete }) => {
                   <span className="video-play-icon">▶</span>
                 </div>
               ) : (
-                <img src={photo.url} alt={`Thumbnail ${index + 1}`} />
+                <img src={photo.url} alt={`Thumbnail ${index + 1}`} onError={(e) => {
+                  e.target.style.display = 'none';
+                  e.target.parentElement.innerHTML = '<span class="thumbnail-fallback">🌸</span>';
+                }} />
               )}
               <div className="thumbnail-overlay">
                 <span>{index + 1}</span>

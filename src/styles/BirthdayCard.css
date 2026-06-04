@@ -1,17 +1,198 @@
+/* Birthday Card Page - Cartoon Vibe */
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700;800&family=Luckiest+Guy&display=swap');
+
 .birthday-card {
-  background: radial-gradient(circle at 10% 30%, #fff7e8, #ffe6c7);
-  border-radius: 80px 80px 80px 40px;
+  background: rgba(26, 26, 46, 0.85);
+  backdrop-filter: blur(15px);
+  border-radius: 80px;
   padding: 2rem;
-  max-width: 650px;
+  max-width: 700px;
   width: 100%;
   text-align: center;
-  box-shadow: 0 35px 55px rgba(0, 0, 0, 0.3);
-  border: 10px double #ffbc6e;
+  box-shadow: 0 35px 55px rgba(0, 0, 0, 0.4);
+  border: 4px solid #FFD700;
   position: relative;
-  animation: zoomIn 0.6s ease-out;
+  animation: zoomInCartoon 0.6s ease-out;
+  font-family: 'Comic Neue', 'Luckiest Guy', cursive;
 }
 
-@keyframes zoomIn {
+@keyframes zoomInCartoon {
+  from {
+    opacity: 0;
+    transform: scale(0.7) rotate(-3deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.card-decoration {
+  position: absolute;
+  top: -30px;
+  right: -20px;
+  font-size: 100px;
+  opacity: 0.15;
+  transform: rotate(15deg);
+}
+
+.card-title {
+  font-family: 'Luckiest Guy', cursive;
+  font-size: 2.2rem;
+  background: linear-gradient(135deg, #FFD700, #FF69B4);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 0.5rem;
+  animation: titleGlow 2s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+  0%, 100% { filter: drop-shadow(0 0 5px rgba(255,215,0,0.3)); }
+  50% { filter: drop-shadow(0 0 20px rgba(255,215,0,0.6)); }
+}
+
+.card-emoji {
+  font-size: 3rem;
+  margin: 10px 0;
+  animation: emojiBounce 1s ease-in-out infinite;
+}
+
+@keyframes emojiBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.card-message {
+  margin: 25px 0;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 60px;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #FFEAA7;
+}
+
+.card-quote {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 105, 180, 0.2));
+  padding: 12px 20px;
+  border-radius: 50px;
+  margin: 20px 0;
+  font-style: italic;
+  font-weight: bold;
+  color: #FFD700;
+  border: 1px solid #FFD700;
+}
+
+.sassy-button {
+  background: linear-gradient(135deg, #FFD700, #FF69B4);
+  border: none;
+  padding: 12px 28px;
+  border-radius: 60px;
+  color: white;
+  cursor: pointer;
+  margin: 10px;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: 'Luckiest Guy', cursive;
+  letter-spacing: 1px;
+}
+
+.sassy-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.sassy-message {
+  margin-top: 20px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 60px;
+  font-size: 1rem;
+  border-left: 8px solid #FFD700;
+  animation: slideDownCartoon 0.3s ease-out;
+  color: #FFEAA7;
+}
+
+@keyframes slideDownCartoon {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) rotate(-2deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+.card-buttons {
+  margin-top: 30px;
+}
+
+.reset-button {
+  background: linear-gradient(135deg, #4ECDC4, #2ECC71);
+  padding: 12px 28px;
+  border-radius: 60px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: 'Luckiest Guy', cursive;
+  letter-spacing: 1px;
+}
+
+.reset-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.card-footer {
+  margin-top: 25px;
+  font-size: 0.85rem;
+  color: #FFEAA7;
+  font-style: italic;
+}
+
+/* Badge Showcase */
+.badge-showcase {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 50px;
+  padding: 1rem;
+  margin: 1rem 0;
+  animation: slideIn 0.5s ease;
+}
+
+.badge-showcase-title {
+  font-size: 1.1rem;
+  color: #FFD700;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-family: 'Luckiest Guy', cursive;
+}
+
+.badges-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+
+.showcase-badge {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50px;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 2px solid;
+  animation: badgeReveal 0.4s ease backwards;
+}
+
+@keyframes badgeReveal {
   from {
     opacity: 0;
     transform: scale(0.8);
@@ -22,103 +203,78 @@
   }
 }
 
-.card-decoration {
-  position: absolute;
-  top: -30px;
-  right: -20px;
-  font-size: 120px;
-  opacity: 0.2;
-  transform: rotate(15deg);
+.showcase-icon {
+  font-size: 1.2rem;
 }
 
-.card-title {
-  font-family: 'Georgia', serif;
-  font-size: 2.2rem;
-  color: #c85b1e;
-  margin-bottom: 0.5rem;
-}
-
-.card-emoji {
-  font-size: 3rem;
-  margin: 10px 0;
-}
-
-.card-message {
-  margin: 25px 0;
-  padding: 20px;
-  background: #fff0dc;
-  border-radius: 60px;
-  font-size: 1rem;
-  line-height: 1.6;
-  color: #4a5568;
-}
-
-.card-quote {
-  background: #e9c891;
-  padding: 12px 20px;
-  border-radius: 50px;
-  margin: 20px 0;
-  font-style: italic;
+.showcase-name {
+  font-size: 0.8rem;
   font-weight: bold;
-  color: #5a3e1b;
+  color: #FFEAA7;
 }
 
-.sassy-button {
-  background: #b3602c;
-  border: none;
-  padding: 10px 25px;
-  border-radius: 50px;
-  color: white;
-  cursor: pointer;
-  margin: 10px;
-  transition: transform 0.2s;
-}
-
-.sassy-button:hover {
-  transform: scale(1.05);
-}
-
-.sassy-message {
-  margin-top: 20px;
-  padding: 15px;
-  background: #ffd6a5;
+.score-summary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.3);
   border-radius: 40px;
-  font-size: 0.95rem;
-  border-left: 8px solid #e68a2e;
-  animation: slideDown 0.3s ease-out;
 }
 
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.score-label {
+  font-weight: bold;
+  color: #FFEAA7;
 }
 
-.card-buttons {
-  margin-top: 30px;
+.score-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #FFD700;
+  font-family: 'Luckiest Guy', cursive;
 }
 
-.reset-button {
-  background: #3a7b6b;
-  padding: 10px 25px;
-  border-radius: 50px;
-  border: none;
-  color: white;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.reset-button:hover {
-  transform: scale(1.05);
-}
-
-.card-footer {
-  margin-top: 25px;
+.score-rank {
+  font-weight: bold;
   font-size: 0.9rem;
-  color: #664d34;
+}
+
+.celebration-message {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #FFD700;
+  font-style: italic;
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .birthday-card {
+    padding: 1rem;
+    margin: 20px;
+  }
+  
+  .card-title {
+    font-size: 1.5rem;
+  }
+  
+  .card-message {
+    font-size: 0.85rem;
+    padding: 15px;
+  }
+  
+  .sassy-button, .reset-button {
+    padding: 8px 20px;
+    font-size: 0.85rem;
+  }
+  
+  .badge-showcase-title {
+    font-size: 0.9rem;
+  }
+  
+  .showcase-name {
+    font-size: 0.65rem;
+  }
 }
